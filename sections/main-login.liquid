@@ -1,0 +1,16 @@
+<div class="page-content" style="max-width:480px;text-align:center;">
+  <h1 style="font-family:var(--font-heading);font-size:36px;margin-bottom:8px;">Sign In</h1>
+  <p style="color:var(--muted);margin-bottom:32px;">Welcome back to Pawfield</p>
+  {%- form 'customer_login' -%}
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
+      <input type="email" name="customer[email]" placeholder="Email address" style="padding:14px 20px;border:2px solid var(--border);border-radius:50px;font-size:15px;outline:none;font-family:var(--font-body);">
+      <input type="password" name="customer[password]" placeholder="Password" style="padding:14px 20px;border:2px solid var(--border);border-radius:50px;font-size:15px;outline:none;font-family:var(--font-body);">
+    </div>
+    <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;">Sign In</button>
+    <div style="margin-top:20px;font-size:14px;color:var(--muted);">
+      <a href="{{ routes.account_recover_url }}" style="color:var(--green);">Forgot password?</a> ·
+      <a href="{{ routes.account_register_url }}" style="color:var(--green);">Create account</a>
+    </div>
+  {%- endform -%}
+</div>
+{% schema %}{"name":"Login","settings":[]}{% endschema %}
