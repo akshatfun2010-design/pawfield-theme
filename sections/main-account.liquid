@@ -1,0 +1,16 @@
+<div class="page-content">
+  <h1>My Account</h1>
+  <p>Welcome, {{ customer.first_name }}!</p>
+  <h2>Order History</h2>
+  {%- if customer.orders.size > 0 -%}
+    {%- for order in customer.orders -%}
+      <div style="padding:16px 0;border-bottom:1px solid var(--border);">
+        <strong>{{ order.name }}</strong> — {{ order.created_at | date: '%B %d, %Y' }} — {{ order.financial_status }}
+      </div>
+    {%- endfor -%}
+  {%- else -%}
+    <p style="color:var(--muted);">You haven't placed any orders yet. <a href="{{ routes.root_url }}" style="color:var(--green);">Start shopping →</a></p>
+  {%- endif -%}
+  <div style="margin-top:32px;"><a href="{{ routes.account_logout_url }}" class="btn btn--secondary">Sign Out</a></div>
+</div>
+{% schema %}{"name":"Account","settings":[]}{% endschema %}
