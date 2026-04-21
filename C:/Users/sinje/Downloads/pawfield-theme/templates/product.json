@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-product", "settings": {} },
+    "related": { "type": "featured-collection", "settings": { "tag": "🐾 You May Also Like", "title": "Related Products", "products_to_show": 4, "show_filters": false, "background": "cream" } }
+  },
+  "order": ["main", "related"]
+}
