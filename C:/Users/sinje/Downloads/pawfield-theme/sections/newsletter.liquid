@@ -1,0 +1,34 @@
+<section class="section newsletter">
+  <div class="section__inner">
+    <div class="newsletter__inner">
+      <div class="newsletter__icon">{{ section.settings.icon }}</div>
+      <h2 class="newsletter__title">{{ section.settings.title }}</h2>
+      <p class="newsletter__text">{{ section.settings.text }}</p>
+      {%- form 'customer', id: 'newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="newsletter__form">
+          <input type="email" name="contact[email]" class="newsletter__input" placeholder="{{ section.settings.placeholder }}" required aria-label="Email address">
+          <button type="submit" class="btn btn--amber">{{ section.settings.button }}</button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p style="color:var(--green);font-weight:600;margin-top:12px;">🎉 You're in! Check your email for your discount code.</p>
+        {%- endif -%}
+      {%- endform -%}
+      <p class="newsletter__note">🔒 We respect your privacy. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🐾" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Join the Pawfield Family" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Get exclusive deals, new product alerts, and pet care tips delivered to your inbox. No spam — ever." },
+    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "Enter your email address" },
+    { "type": "text", "id": "button", "label": "Button label", "default": "Subscribe →" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}
