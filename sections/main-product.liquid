@@ -1,0 +1,66 @@
+{%- assign product = product -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div class="product-page">
+  <div class="product-gallery">
+    <div class="product-gallery__main">
+      {%- if product.featured_image -%}
+        <img id="mainProductImage" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}" width="800" height="800" loading="eager">
+      {%- else -%}
+        <span style="font-size:100px;">🐾</span>
+      {%- endif -%}
+    </div>
+    {%- if product.images.size > 1 -%}
+      <div class="product-gallery__thumbs">
+        {%- for image in product.images limit: 5 -%}
+          <div class="product-gallery__thumb {% if forloop.first %}is-active{% endif %}">
+            <img src="{{ image | image_url: width: 160 }}" alt="{{ product.title }}" width="80" height="80" loading="lazy">
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="product-info">
+    <div class="product-info__category">{{ product.type | default: 'Pet Essentials' }}</div>
+    <h1 class="product-info__title">{{ product.title }}</h1>
+    <div class="product-info__stars">
+      <span style="color:#F59E0B;font-size:16px;">★★★★★</span>
+      <span style="font-size:14px;color:var(--muted);margin-left:8px;">Verified Reviews</span>
+    </div>
+    <div class="product-info__price">
+      {{ current_variant.price | money }}
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        <span class="product-info__original">{{ current_variant.compare_at_price | money }}</span>
+      {%- endif -%}
+    </div>
+    {%- if current_variant.compare_at_price > current_variant.price -%}
+      {%- assign savings = current_variant.compare_at_price | minus: current_variant.price -%}
+      <div class="product-info__savings">You save {{ savings | money }}!</div>
+    {%- endif -%}
+
+    <div class="product-info__description">{{ product.description }}</div>
+
+    {%- form 'product', product, id: 'product-form' -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      <button type="submit" class="btn btn--primary product-info__add-btn" {% unless current_variant.available %}disabled{% endunless %}>
+        {%- if current_variant.available -%}🛒 Add to Cart{%- else -%}Sold Out{%- endif -%}
+      </button>
+    {%- endform -%}
+
+    <button class="product-info__buy-btn">⚡ Buy It Now</button>
+
+    <div class="product-info__trust">
+      <div class="product-info__trust-item">🚚 Ships in 1–2 days</div>
+      <div class="product-info__trust-item">🔄 30-day returns</div>
+      <div class="product-info__trust-item">🔒 Secure checkout</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}
