@@ -1,0 +1,30 @@
+<div class="email-popup" id="emailPopup" role="dialog" aria-modal="true" aria-label="Special offer">
+  <div class="email-popup__backdrop"></div>
+  <div class="email-popup__card">
+    <button class="email-popup__close" id="popupClose" aria-label="Close">✕</button>
+    <div class="email-popup__badge">🎉 Limited Time Offer</div>
+    <div class="email-popup__icon">🐾</div>
+    <h2 class="email-popup__title">Get <span>{{ section.settings.discount }}% Off</span> Your First Order</h2>
+    <p class="email-popup__text">{{ section.settings.text }}</p>
+    <div id="popupCode" class="email-popup__code">{{ section.settings.code }}</div>
+    {%- form 'customer', id: 'popupForm' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter,popup">
+      <div class="email-popup__form">
+        <input type="email" name="contact[email]" class="email-popup__input" placeholder="Enter your email" required aria-label="Email address">
+        <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;">Claim My {{ section.settings.discount }}% Off →</button>
+      </div>
+    {%- endform -%}
+    <button class="email-popup__skip" id="popupSkip">No thanks, I'll pay full price</button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Email Popup",
+  "settings": [
+    { "type": "range", "id": "discount", "min": 5, "max": 30, "step": 5, "default": 10, "label": "Discount percentage" },
+    { "type": "text", "id": "code", "label": "Discount code", "default": "PAWFIELD10" },
+    { "type": "textarea", "id": "text", "label": "Body text", "default": "Join 12,000+ happy pet parents. Enter your email to unlock your exclusive discount — plus get early access to new products and pet care tips." }
+  ]
+}
+{% endschema %}
