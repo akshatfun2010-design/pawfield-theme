@@ -1,0 +1,15 @@
+<div class="page-content" style="max-width:480px;text-align:center;">
+  <h1 style="font-family:var(--font-heading);font-size:36px;margin-bottom:8px;">Create Account</h1>
+  <p style="color:var(--muted);margin-bottom:32px;">Join the Pawfield family 🐾</p>
+  {%- form 'create_customer' -%}
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
+      <input type="text" name="customer[first_name]" placeholder="First name" style="padding:14px 20px;border:2px solid var(--border);border-radius:50px;font-size:15px;outline:none;font-family:var(--font-body);">
+      <input type="text" name="customer[last_name]" placeholder="Last name" style="padding:14px 20px;border:2px solid var(--border);border-radius:50px;font-size:15px;outline:none;font-family:var(--font-body);">
+      <input type="email" name="customer[email]" placeholder="Email address" style="padding:14px 20px;border:2px solid var(--border);border-radius:50px;font-size:15px;outline:none;font-family:var(--font-body);">
+      <input type="password" name="customer[password]" placeholder="Password" style="padding:14px 20px;border:2px solid var(--border);border-radius:50px;font-size:15px;outline:none;font-family:var(--font-body);">
+    </div>
+    <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;">Create Account</button>
+    <div style="margin-top:16px;font-size:14px;color:var(--muted);">Already have an account? <a href="{{ routes.account_login_url }}" style="color:var(--green);">Sign in</a></div>
+  {%- endform -%}
+</div>
+{% schema %}{"name":"Register","settings":[]}{% endschema %}
