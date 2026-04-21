@@ -1,0 +1,73 @@
+{%- assign collection = collections[section.settings.collection] -%}
+
+<section class="section section--{{ section.settings.background }}">
+  <div class="section__inner">
+    <div class="section__header-row">
+      <div>
+        {%- if section.settings.tag != blank -%}
+          <div class="section__tag">{{ section.settings.tag }}</div>
+        {%- endif -%}
+        <h2 class="section__title">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="section__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+      {%- if collection != blank -%}
+        <a href="{{ collection.url }}" class="view-all">View all →</a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_filters -%}
+      <div class="filter-pills">
+        <button class="filter-pill is-active">🐾 All Pets</button>
+        <button class="filter-pill">🐕 Dogs</button>
+        <button class="filter-pill">🐈 Cats</button>
+        <button class="filter-pill">🤖 Smart Tech</button>
+        <button class="filter-pill">🛏️ Beds</button>
+        <button class="filter-pill">🍽️ Feeding</button>
+      </div>
+    {%- endif -%}
+
+    <div class="product-grid">
+      {%- if collection != blank and collection.products.size > 0 -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_to_show) -%}
+          <div class="product-card">
+            <div class="product-card__image" style="background:var(--green-light);display:flex;align-items:center;justify-content:center;aspect-ratio:1;font-size:60px;">🐾</div>
+            <div class="product-card__info">
+              <div class="product-card__category">Pet Essentials</div>
+              <div class="product-card__title">Add your products from CJDropshipping</div>
+              <div class="product-card__stars">
+                <span class="product-card__stars-icons">★★★★★</span>
+                <span class="product-card__review-count">(0 reviews)</span>
+              </div>
+              <div class="product-card__footer">
+                <div><span class="product-card__price">$89</span></div>
+                <button class="product-card__add-btn">+</button>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "tag", "label": "Tag label", "default": "🔥 Most Popular" },
+    { "type": "text", "id": "title", "label": "Section title", "default": "Best Sellers" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Our top-rated products loved by thousands of pet parents every month." },
+    { "type": "range", "id": "products_to_show", "min": 2, "max": 12, "step": 1, "default": 4, "label": "Products to show" },
+    { "type": "select", "id": "background", "label": "Background", "options": [{"value":"cream","label":"Cream"},{"value":"white","label":"White"}], "default": "cream" },
+    { "type": "checkbox", "id": "show_filters", "label": "Show filter pills", "default": true }
+  ],
+  "presets": [{ "name": "Featured Collection" }]
+}
+{% endschema %}
