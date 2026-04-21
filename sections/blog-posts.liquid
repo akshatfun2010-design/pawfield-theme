@@ -1,0 +1,59 @@
+<section class="section section--{{ section.settings.background }}">
+  <div class="section__inner">
+    <div class="section__header-row">
+      <div>
+        <div class="section__tag">📝 Pet Care Tips</div>
+        <h2 class="section__title">{{ section.settings.title }}</h2>
+        <p class="section__subtitle">{{ section.settings.subtitle }}</p>
+      </div>
+      <a href="{{ blogs[section.settings.blog].url }}" class="view-all">View all posts →</a>
+    </div>
+    <div class="blog-grid">
+      {%- assign blog = blogs[section.settings.blog] -%}
+      {%- if blog != blank and blog.articles.size > 0 -%}
+        {%- for article in blog.articles limit: 3 -%}
+          <article class="blog-card">
+            <a href="{{ article.url }}">
+              {%- if article.image -%}
+                <img class="blog-card__image" src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title }}" width="600" height="200" loading="lazy">
+              {%- else -%}
+                <div class="blog-card__image">🐾</div>
+              {%- endif -%}
+            </a>
+            <div class="blog-card__info">
+              <div class="blog-card__tag">{{ article.tags.first | default: 'Pet Care' }}</div>
+              <h3 class="blog-card__title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+              <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 100 }}</p>
+              <div class="blog-card__meta">{{ article.published_at | date: '%B %d, %Y' }} · {{ article.author }}</div>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..3) -%}
+          <article class="blog-card">
+            <div class="blog-card__image">🐶</div>
+            <div class="blog-card__info">
+              <div class="blog-card__tag">Pet Care</div>
+              <h3 class="blog-card__title">5 Signs Your Dog Needs an Orthopedic Bed</h3>
+              <p class="blog-card__excerpt">As dogs age, joint health becomes critical. Here's how to tell if your pup would benefit from an upgrade...</p>
+              <div class="blog-card__meta">April 2026 · Pawfield Team</div>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog Posts",
+  "settings": [
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Pet Care Tips & Guides" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Expert advice to keep your dog or cat happy, healthy, and thriving." },
+    { "type": "select", "id": "background", "label": "Background", "options": [{"value":"cream","label":"Cream"},{"value":"white","label":"White"}], "default": "cream" }
+  ],
+  "presets": [{ "name": "Blog Posts" }]
+}
+{% endschema %}
