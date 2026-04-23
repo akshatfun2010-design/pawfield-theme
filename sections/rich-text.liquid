@@ -8,7 +8,7 @@
         <h2 class="rich-text__title">{{ section.settings.title }}</h2>
         <p class="rich-text__text">{{ section.settings.text }}</p>
         {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_url }}" class="btn btn--primary">{{ section.settings.button_label }}</a>
+          <a href="{{ section.settings.button_url | default: '/collections/all' }}" class="btn btn--primary">{{ section.settings.button_label }}</a>
         {%- endif -%}
       </div>
     </div>
