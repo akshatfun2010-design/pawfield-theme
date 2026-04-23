@@ -22,9 +22,9 @@
         <button class="filter-pill is-active" data-filter="all">🐾 All Pets</button>
         <button class="filter-pill" data-filter="dog">🐕 Dogs</button>
         <button class="filter-pill" data-filter="cat">🐈 Cats</button>
-        <button class="filter-pill" data-filter="smart-tech">🤖 Smart Tech</button>
+        <button class="filter-pill" data-filter="smart tech">🤖 Smart Tech</button>
+        <button class="filter-pill" data-filter="grooming">✂️ Grooming</button>
         <button class="filter-pill" data-filter="bed">🛏️ Beds</button>
-        <button class="filter-pill" data-filter="grooming">🍽️ Grooming</button>
       </div>
     {%- endif -%}
 
@@ -66,11 +66,14 @@
       this.classList.add('is-active');
       document.querySelectorAll('#product-grid-{{ section.id }} .product-card-wrapper').forEach(function(card) {
         var tags = card.dataset.tags || '';
-        if (filter === 'all' || tags.split(',').map(function(t){ return t.trim(); }).indexOf(filter) !== -1) {
+        var tagList = tags.split(',').map(function(t){ return t.trim(); });
+        var matches = filter === 'all' || tagList.some(function(t){ return t === filter || t === filter + 's' || t + 's' === filter; });
+        if (matches) {
           card.style.display = '';
         } else {
           card.style.display = 'none';
         }
+
       });
     });
   });
