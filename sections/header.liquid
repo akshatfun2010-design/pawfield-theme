@@ -11,32 +11,18 @@
 
     <nav aria-label="Main navigation">
       <ul class="header__nav">
-        {%- for link in section.settings.menu.links -%}
-          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-        {%- endfor -%}
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="/collections/all">Catalog</a></li>
+        <li><a href="/pages/about-us">About Us</a></li>
+        <li><a href="{{ routes.account_url }}">Orders</a></li>
       </ul>
     </nav>
 
     <div class="header__icons">
-      {%- if section.settings.show_currency -%}
-        <div class="currency-selector">
-          <select onchange="this.form && this.form.submit()" aria-label="Currency">
-            {%- for currency in localization.available_countries -%}
-              <option value="{{ currency.iso_code }}" {% if localization.country.iso_code == currency.iso_code %}selected{% endif %}>
-                {{ currency.currency.iso_code }} {{ currency.currency.symbol }}
-              </option>
-            {%- endfor -%}
-          </select>
-        </div>
-      {%- endif -%}
-
-      <a href="{{ routes.search_url }}" class="header__icon-btn" aria-label="Search">🔍</a>
-      <a href="{{ routes.account_url }}" class="header__icon-btn" aria-label="Account">👤</a>
       <a href="{{ routes.cart_url }}" class="header__cart-btn" aria-label="Cart" id="cart-btn">
         🛒 Cart
         <span class="header__cart-count" id="cart-count">{{ cart.item_count }}</span>
       </a>
-
       <button class="header__mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
     </div>
 
@@ -44,11 +30,10 @@
 
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
     <ul>
-      {%- for link in section.settings.menu.links -%}
-        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-      {%- endfor -%}
-      <li><a href="{{ routes.search_url }}">Search</a></li>
-      <li><a href="{{ routes.account_url }}">Account</a></li>
+      <li><a href="{{ routes.root_url }}">Home</a></li>
+      <li><a href="/collections/all">Catalog</a></li>
+      <li><a href="/pages/about-us">About Us</a></li>
+      <li><a href="{{ routes.account_url }}">Orders</a></li>
       <li><a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a></li>
     </ul>
   </nav>
