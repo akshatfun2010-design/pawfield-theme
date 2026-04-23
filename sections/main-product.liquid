@@ -13,7 +13,7 @@
     {%- if product.images.size > 1 -%}
       <div class="product-gallery__thumbs">
         {%- for image in product.images limit: 5 -%}
-          <div class="product-gallery__thumb {% if forloop.first %}is-active{% endif %}">
+          <div class="product-gallery__thumb {% if forloop.first %}is-active{% endif %}" data-image-url="{{ image | image_url: width: 800 }}">
             <img src="{{ image | image_url: width: 160 }}" alt="{{ product.title }}" width="80" height="80" loading="lazy">
           </div>
         {%- endfor -%}
@@ -28,35 +28,143 @@
       <span style="color:#F59E0B;font-size:16px;">★★★★★</span>
       <span style="font-size:14px;color:var(--muted);margin-left:8px;">Verified Reviews</span>
     </div>
-    <div class="product-info__price">
-      {{ current_variant.price | money }}
+    <div class="product-info__price" id="product-price">
+      <span id="price-display">{{ current_variant.price | money }}</span>
       {%- if current_variant.compare_at_price > current_variant.price -%}
-        <span class="product-info__original">{{ current_variant.compare_at_price | money }}</span>
+        <span class="product-info__original" id="compare-price">{{ current_variant.compare_at_price | money }}</span>
+      {%- else -%}
+        <span class="product-info__original" id="compare-price" style="display:none;"></span>
       {%- endif -%}
     </div>
     {%- if current_variant.compare_at_price > current_variant.price -%}
       {%- assign savings = current_variant.compare_at_price | minus: current_variant.price -%}
-      <div class="product-info__savings">You save {{ savings | money }}!</div>
+      <div class="product-info__savings" id="savings-display">You save {{ savings | money }}!</div>
+    {%- else -%}
+      <div class="product-info__savings" id="savings-display" style="display:none;"></div>
     {%- endif -%}
+
+    {%- unless product.has_only_default_variant -%}
+      <div class="product-info__variants" style="margin:20px 0;">
+        {%- for option in product.options_with_values -%}
+          <div style="margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">
+              {{ option.name }}: <span id="selected-{{ option.position }}" style="font-weight:400;text-transform:none;">{{ option.selected_value }}</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              {%- for value in option.values -%}
+                <button
+                  type="button"
+                  class="variant-btn {% if option.selected_value == value %}variant-btn--active{% endif %}"
+                  data-option-position="{{ option.position }}"
+                  data-value="{{ value }}"
+                  style="padding:8px 16px;border:2px solid {% if option.selected_value == value %}var(--green){% else %}var(--border){% endif %};border-radius:50px;font-size:13px;font-family:var(--font-body);cursor:pointer;background:{% if option.selected_value == value %}var(--green){% else %}white{% endif %};color:{% if option.selected_value == value %}white{% else %}var(--dark){% endif %};transition:all 0.2s;">
+                  {{ value }}
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endunless -%}
 
     <div class="product-info__description">{{ product.description }}</div>
 
     {%- form 'product', product, id: 'product-form' -%}
-      <input type="hidden" name="id" value="{{ current_variant.id }}">
-      <button type="submit" class="btn btn--primary product-info__add-btn" {% unless current_variant.available %}disabled{% endunless %}>
-        {%- if current_variant.available -%}🛒 Add to Cart{%- else -%}Sold Out{%- endif -%}
-      </button>
+      <input type="hidden" name="id" id="variant-id" value="{{ current_variant.id }}">
+      <div style="display:flex;gap:12px;margin-top:20px;">
+        <button type="submit" class="btn btn--primary product-info__add-btn" id="add-to-cart-btn" style="flex:1;justify-content:center;" {% unless current_variant.available %}disabled{% endunless %}>
+          {%- if current_variant.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+        </button>
+      </div>
     {%- endform -%}
 
-    <button class="product-info__buy-btn">⚡ Buy It Now</button>
-
-    <div class="product-info__trust">
-      <div class="product-info__trust-item">🚚 Ships in 1–2 days</div>
+    <div class="product-info__trust" style="margin-top:20px;">
+      <div class="product-info__trust-item">🚚 Fast US Shipping</div>
       <div class="product-info__trust-item">🔄 30-day returns</div>
       <div class="product-info__trust-item">🔒 Secure checkout</div>
     </div>
   </div>
 </div>
+
+<script>
+  var productVariants = {{ product.variants | json }};
+  var selectedOptions = [
+    {%- for option in product.options_with_values -%}
+      "{{ option.selected_value }}"{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ];
+
+  function findVariant() {
+    return productVariants.find(function(v) {
+      return v.options.every(function(opt, i) {
+        return opt === selectedOptions[i];
+      });
+    });
+  }
+
+  function updateProduct(variant) {
+    if (!variant) return;
+    document.getElementById('variant-id').value = variant.id;
+
+    var price = (variant.price / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+    document.getElementById('price-display').textContent = price;
+
+    var compareEl = document.getElementById('compare-price');
+    var savingsEl = document.getElementById('savings-display');
+    if (variant.compare_at_price > variant.price) {
+      var comparePrice = (variant.compare_at_price / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+      compareEl.textContent = comparePrice;
+      compareEl.style.display = 'inline';
+      var savings = ((variant.compare_at_price - variant.price) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+      savingsEl.textContent = 'You save ' + savings + '!';
+      savingsEl.style.display = 'block';
+    } else {
+      compareEl.style.display = 'none';
+      savingsEl.style.display = 'none';
+    }
+
+    var btn = document.getElementById('add-to-cart-btn');
+    if (variant.available) {
+      btn.disabled = false;
+      btn.textContent = 'Add to Cart';
+    } else {
+      btn.disabled = true;
+      btn.textContent = 'Sold Out';
+    }
+  }
+
+  document.querySelectorAll('.variant-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var position = parseInt(this.dataset.optionPosition) - 1;
+      var value = this.dataset.value;
+      selectedOptions[position] = value;
+
+      document.querySelectorAll('.variant-btn[data-option-position="' + this.dataset.optionPosition + '"]').forEach(function(b) {
+        b.style.background = 'white';
+        b.style.color = 'var(--dark)';
+        b.style.borderColor = 'var(--border)';
+      });
+      this.style.background = 'var(--green)';
+      this.style.color = 'white';
+      this.style.borderColor = 'var(--green)';
+
+      var selectedLabel = document.getElementById('selected-' + this.dataset.optionPosition);
+      if (selectedLabel) selectedLabel.textContent = value;
+
+      var variant = findVariant();
+      if (variant) updateProduct(variant);
+    });
+  });
+
+  document.querySelectorAll('.product-gallery__thumb').forEach(function(thumb) {
+    thumb.addEventListener('click', function() {
+      var url = this.dataset.imageUrl;
+      if (url) document.getElementById('mainProductImage').src = url;
+      document.querySelectorAll('.product-gallery__thumb').forEach(function(t) { t.classList.remove('is-active'); });
+      this.classList.add('is-active');
+    });
+  });
+</script>
 
 {% schema %}
 {
