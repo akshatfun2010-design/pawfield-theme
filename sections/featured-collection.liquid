@@ -1,6 +1,6 @@
 {%- assign collection = collections[section.settings.collection] -%}
 
-<section class="section section--{{ section.settings.background }}" id="section-{{ section.id }}">
+<section class="section section--{{ section.settings.background }}" id="best-sellers" data-section-id="{{ section.id }}">
   <div class="section__inner">
     <div class="section__header-row">
       <div>
@@ -82,7 +82,7 @@
 
 <script>
   (function() {
-    var section = document.getElementById('section-{{ section.id }}');
+    var section = document.querySelector('[data-section-id="{{ section.id }}"]');
     if (!section) return;
 
     function filterProducts(filter) {
