@@ -149,6 +149,11 @@ button { cursor: pointer; font-family: var(--font-body); }
 .filter-pill { padding: 9px 22px; border-radius: 50px; border: 2px solid var(--border); background: var(--white); font-size: 14px; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 7px; }
 .filter-pill:hover, .filter-pill.is-active { background: var(--green); color: white; border-color: var(--green); }
 
+/* ── SIDEBAR CATEGORIES ── */
+.sidebar-cat { text-align: left; padding: 8px 12px; border: none; background: transparent; color: var(--dark, #1C1C1C); border-radius: 8px; font-size: 14px; cursor: pointer; font-family: var(--font-body); width: 100%; transition: all 0.2s; }
+.sidebar-cat:hover { background: var(--green-light); color: var(--green); }
+.sidebar-cat.is-active { background: var(--green); color: white; }
+
 /* ── RICH TEXT ── */
 .rich-text { text-align: center; }
 .rich-text__inner { max-width: 680px; margin: 0 auto; }
