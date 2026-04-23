@@ -67,8 +67,6 @@
       </div>
     {%- endunless -%}
 
-    <div class="product-info__description">{{ product.description }}</div>
-
     {%- form 'product', product, id: 'product-form' -%}
       <input type="hidden" name="id" id="variant-id" value="{{ current_variant.id }}">
       <div style="display:flex;gap:12px;margin-top:20px;">
@@ -83,6 +81,8 @@
       <div class="product-info__trust-item">🔄 30-day returns</div>
       <div class="product-info__trust-item">🔒 Secure checkout</div>
     </div>
+
+    <div class="product-info__description" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;">{{ product.description }}</div>
   </div>
 </div>
 
