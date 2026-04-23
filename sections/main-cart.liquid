@@ -2,40 +2,43 @@
   <a href="{{ routes.root_url }}" style="display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:14px;margin-bottom:20px;text-decoration:none;">← Continue Shopping</a>
   <h1 class="cart-page__title">Your Cart 🛒</h1>
   {%- if cart.item_count > 0 -%}
-    {%- form 'cart', cart -%}
+    <div id="cart-items">
       {%- for item in cart.items -%}
-        <div class="cart-item">
+        <div class="cart-item" id="cart-item-{{ item.key | replace: ':', '-' }}">
           <div class="cart-item__image">
             <a href="{{ item.url }}">
               <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}" width="100" height="100">
             </a>
           </div>
-          <div>
+          <div style="flex:1;">
             <div class="cart-item__title">{{ item.product.title }}</div>
             {%- unless item.product.has_only_default_variant -%}
-              <div style="font-size:13px;color:var(--muted);">{{ item.variant.title }}</div>
+              <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">{{ item.variant.title }}</div>
             {%- endunless -%}
             <div class="cart-item__qty">
-              <button class="cart-item__qty-btn" type="button">−</button>
-              <span class="cart-item__qty-num">{{ item.quantity }}</span>
-              <button class="cart-item__qty-btn" type="button">+</button>
+              <button class="cart-item__qty-btn" type="button" onclick="updateCartItem('{{ item.key }}', {{ item.quantity | minus: 1 }})">−</button>
+              <span class="cart-item__qty-num" id="qty-{{ item.key | replace: ':', '-' }}">{{ item.quantity }}</span>
+              <button class="cart-item__qty-btn" type="button" onclick="updateCartItem('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
             </div>
           </div>
-          <div class="cart-item__price">{{ item.final_line_price | money }}</div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+            <div class="cart-item__price" id="price-{{ item.key | replace: ':', '-' }}">{{ item.final_line_price | money }}</div>
+            <button onclick="updateCartItem('{{ item.key }}', 0)" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;">Remove</button>
+          </div>
         </div>
       {%- endfor -%}
+    </div>
 
-      <div class="cart-summary">
-        <h2 class="cart-summary__title">Order Summary</h2>
-        <div class="cart-summary__line"><span>Subtotal</span><span>{{ cart.total_price | money }}</span></div>
-        <div class="cart-summary__line"><span>Shipping</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
-        <div class="cart-summary__total"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
-        <button type="submit" name="checkout" class="btn btn--primary" style="width:100%;justify-content:center;font-size:16px;padding:16px;">Checkout Securely 🔒</button>
-        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;">🔄 30-day returns · 🚚 Fast US shipping</p>
-      </div>
-    {%- endform -%}
+    <div class="cart-summary" id="cart-summary">
+      <h2 class="cart-summary__title">Order Summary</h2>
+      <div class="cart-summary__line"><span>Subtotal</span><span id="cart-subtotal">{{ cart.total_price | money }}</span></div>
+      <div class="cart-summary__line"><span>Shipping</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
+      <div class="cart-summary__total"><span>Total</span><span id="cart-total">{{ cart.total_price | money }}</span></div>
+      <a href="/checkout" class="btn btn--primary" style="width:100%;justify-content:center;font-size:16px;padding:16px;display:flex;">Checkout Securely 🔒</a>
+      <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;">🔄 30-day returns · 🚚 Fast US shipping</p>
+    </div>
   {%- else -%}
-    <div style="text-align:center;padding:60px 0;">
+    <div style="text-align:center;padding:60px 0;" id="empty-cart">
       <div style="font-size:80px;margin-bottom:20px;">🐾</div>
       <h2 style="font-family:var(--font-heading);font-size:32px;margin-bottom:12px;">Your cart is empty</h2>
       <p style="color:var(--muted);margin-bottom:28px;">Looks like you haven't added anything yet.</p>
@@ -43,6 +46,47 @@
     </div>
   {%- endif -%}
 </div>
+
+<script>
+  function updateCartItem(key, quantity) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: key, quantity: quantity})
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(cart) {
+      var countEl = document.getElementById('cart-count');
+      if (countEl) countEl.textContent = cart.item_count;
+
+      if (cart.item_count === 0) {
+        location.reload();
+        return;
+      }
+
+      var subtotalEl = document.getElementById('cart-subtotal');
+      var totalEl = document.getElementById('cart-total');
+      var price = (cart.total_price / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+      if (subtotalEl) subtotalEl.textContent = price;
+      if (totalEl) totalEl.textContent = price;
+
+      if (quantity === 0) {
+        var itemEl = document.getElementById('cart-item-' + key.replace(':', '-'));
+        if (itemEl) itemEl.remove();
+      } else {
+        var qtyEl = document.getElementById('qty-' + key.replace(':', '-'));
+        if (qtyEl) qtyEl.textContent = quantity;
+
+        cart.items.forEach(function(item) {
+          if (item.key === key) {
+            var priceEl = document.getElementById('price-' + key.replace(':', '-'));
+            if (priceEl) priceEl.textContent = (item.final_line_price / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+          }
+        });
+      }
+    });
+  }
+</script>
 
 {% schema %}
 {
