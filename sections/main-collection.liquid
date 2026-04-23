@@ -1,27 +1,93 @@
-<section class="section section--cream">
+<section class="section section--cream" id="collection-section">
   <div class="section__inner">
+    <a href="{{ routes.root_url }}" style="display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:14px;text-decoration:none;margin-bottom:20px;">← Back to Home</a>
     <div class="section__header">
       <h1 class="section__title">{{ collection.title }}</h1>
       {%- if collection.description != blank -%}
         <p class="section__subtitle">{{ collection.description }}</p>
       {%- endif -%}
     </div>
-    <div class="filter-pills">
-      <button class="filter-pill is-active">All</button>
-      <button class="filter-pill">🐕 Dogs</button>
-      <button class="filter-pill">🐈 Cats</button>
-      <button class="filter-pill">🤖 Smart Tech</button>
-      <button class="filter-pill">🛏️ Beds</button>
-    </div>
-    <div class="product-grid">
-      {%- for product in collection.products -%}
-        {%- render 'product-card', product: product -%}
-      {%- else -%}
-        <p>No products found.</p>
-      {%- endfor -%}
+
+    <div style="display:flex;gap:32px;align-items:flex-start;">
+
+      <div style="min-width:160px;background:white;border:1px solid var(--border);border-radius:16px;padding:20px;position:sticky;top:100px;flex-shrink:0;">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:14px;">Categories</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <button class="sidebar-cat is-active" data-filter="all" style="text-align:left;padding:8px 12px;border:none;background:var(--green);color:white;border-radius:8px;font-size:14px;cursor:pointer;font-family:var(--font-body);">🐾 All Pets</button>
+          <button class="sidebar-cat" data-filter="dog" style="text-align:left;padding:8px 12px;border:none;background:transparent;color:var(--dark);border-radius:8px;font-size:14px;cursor:pointer;font-family:var(--font-body);">🐕 Dogs</button>
+          <button class="sidebar-cat" data-filter="cat" style="text-align:left;padding:8px 12px;border:none;background:transparent;color:var(--dark);border-radius:8px;font-size:14px;cursor:pointer;font-family:var(--font-body);">🐈 Cats</button>
+          <button class="sidebar-cat" data-filter="smart tech" style="text-align:left;padding:8px 12px;border:none;background:transparent;color:var(--dark);border-radius:8px;font-size:14px;cursor:pointer;font-family:var(--font-body);">🤖 Smart Tech</button>
+          <button class="sidebar-cat" data-filter="grooming" style="text-align:left;padding:8px 12px;border:none;background:transparent;color:var(--dark);border-radius:8px;font-size:14px;cursor:pointer;font-family:var(--font-body);">✂️ Grooming</button>
+          <button class="sidebar-cat" data-filter="bed" style="text-align:left;padding:8px 12px;border:none;background:transparent;color:var(--dark);border-radius:8px;font-size:14px;cursor:pointer;font-family:var(--font-body);">🛏️ Beds</button>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:0;">
+        <div class="filter-pills">
+          <button class="filter-pill is-active" data-filter="all">🐾 All</button>
+          <button class="filter-pill" data-filter="dog">🐕 Dogs</button>
+          <button class="filter-pill" data-filter="cat">🐈 Cats</button>
+          <button class="filter-pill" data-filter="smart tech">🤖 Smart Tech</button>
+          <button class="filter-pill" data-filter="grooming">✂️ Grooming</button>
+          <button class="filter-pill" data-filter="bed">🛏️ Beds</button>
+        </div>
+        <div class="product-grid" id="collection-grid">
+          {%- for product in collection.products -%}
+            <div class="product-card-wrapper" data-tags="{{ product.tags | join: ',' | downcase }}">
+              {%- render 'product-card', product: product -%}
+            </div>
+          {%- else -%}
+            <p>No products found.</p>
+          {%- endfor -%}
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<script>
+  (function() {
+    var section = document.getElementById('collection-section');
+    if (!section) return;
+
+    function filterProducts(filter) {
+      section.querySelectorAll('.product-card-wrapper').forEach(function(card) {
+        var tags = card.dataset.tags || '';
+        var tagList = tags.split(',').map(function(t){ return t.trim().toLowerCase(); });
+        var filterAlt = filter.replace(' ', '-').replace('-', ' ');
+        var matches = filter === 'all' || tagList.some(function(t){
+          return t === filter || t === filter + 's' || t + 's' === filter || t === filterAlt || t === filterAlt + 's' || t + 's' === filterAlt;
+        });
+        card.style.display = matches ? '' : 'none';
+      });
+    }
+
+    section.querySelectorAll('.filter-pill[data-filter]').forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        section.querySelectorAll('.filter-pill[data-filter]').forEach(function(p) { p.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        filterProducts(this.dataset.filter);
+      });
+    });
+
+    section.querySelectorAll('.sidebar-cat').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var filter = this.dataset.filter;
+        section.querySelectorAll('.sidebar-cat').forEach(function(b) {
+          b.style.background = 'transparent';
+          b.style.color = 'var(--dark)';
+        });
+        this.style.background = 'var(--green)';
+        this.style.color = 'white';
+        section.querySelectorAll('.filter-pill[data-filter]').forEach(function(p) { p.classList.remove('is-active'); });
+        var matchingPill = section.querySelector('.filter-pill[data-filter="' + filter + '"]');
+        if (matchingPill) matchingPill.classList.add('is-active');
+        filterProducts(filter);
+      });
+    });
+  })();
+</script>
 
 {% schema %}
 {
