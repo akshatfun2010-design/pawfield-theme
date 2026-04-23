@@ -83,8 +83,15 @@
       btn.addEventListener('click', function() { setFilter(this.dataset.filter); });
     });
 
-    var hash = window.location.hash.replace('#', '').replace(/-/g, ' ');
-    if (hash) { setFilter(hash); }
+    function applyHash() {
+      var hash = window.location.hash.replace('#', '').replace(/-/g, ' ').trim();
+      if (hash && hash !== '') { setFilter(hash); }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyHash);
+    } else {
+      setTimeout(applyHash, 50);
+    }
   })();
 </script>
 
