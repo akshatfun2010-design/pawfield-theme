@@ -65,9 +65,16 @@
 
     section.querySelectorAll('.filter-pill[data-filter]').forEach(function(pill) {
       pill.addEventListener('click', function() {
+        var filter = this.dataset.filter;
         section.querySelectorAll('.filter-pill[data-filter]').forEach(function(p) { p.classList.remove('is-active'); });
         this.classList.add('is-active');
-        filterProducts(this.dataset.filter);
+        section.querySelectorAll('.sidebar-cat').forEach(function(b) {
+          b.style.background = 'transparent';
+          b.style.color = 'var(--dark)';
+        });
+        var matchingSidebar = section.querySelector('.sidebar-cat[data-filter="' + filter + '"]');
+        if (matchingSidebar) { matchingSidebar.style.background = 'var(--green)'; matchingSidebar.style.color = 'white'; }
+        filterProducts(filter);
       });
     });
 
