@@ -24,7 +24,7 @@
 
       <div class="hero__btns">
         {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_url | default: '/collections/all' }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }} →</a>
+          <a href="{{ section.settings.button_url | default: '#best-sellers' }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }} →</a>
         {%- endif -%}
         {%- if section.settings.button_2_label != blank -%}
           <a href="{{ section.settings.button_2_url | default: '/collections/all#smart-tech' }}" class="btn btn--secondary btn--lg" style="color:white;border-color:rgba(255,255,255,0.6);">{{ section.settings.button_2_label }}</a>
