@@ -1,4 +1,5 @@
 <div class="cart-page">
+  <a href="{{ routes.root_url }}" style="display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:14px;margin-bottom:20px;text-decoration:none;">← Continue Shopping</a>
   <h1 class="cart-page__title">Your Cart 🛒</h1>
   {%- if cart.item_count > 0 -%}
     {%- form 'cart', cart -%}
