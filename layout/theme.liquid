@@ -40,5 +40,27 @@
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  <script>
+    function pawfieldAddToCart(btn) {
+      var variantId = btn.dataset.variantId;
+      if (!variantId) return;
+      btn.textContent = '✓';
+      btn.style.background = 'var(--green)';
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id: variantId, quantity: 1})
+      }).then(function() {
+        return fetch('/cart.js');
+      }).then(function(r){ return r.json(); }).then(function(cart) {
+        var countEl = document.getElementById('cart-count');
+        if (countEl) countEl.textContent = cart.item_count;
+        setTimeout(function(){ btn.textContent = '+'; btn.style.background = ''; }, 1500);
+      }).catch(function() {
+        btn.textContent = '+';
+        window.location = '/cart';
+      });
+    }
+  </script>
 </body>
 </html>
