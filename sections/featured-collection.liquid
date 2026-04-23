@@ -19,23 +19,25 @@
 
     {%- if section.settings.show_filters -%}
       <div class="filter-pills">
-        <button class="filter-pill is-active">🐾 All Pets</button>
-        <button class="filter-pill">🐕 Dogs</button>
-        <button class="filter-pill">🐈 Cats</button>
-        <button class="filter-pill">🤖 Smart Tech</button>
-        <button class="filter-pill">🛏️ Beds</button>
-        <button class="filter-pill">🍽️ Feeding</button>
+        <button class="filter-pill is-active" data-filter="all">🐾 All Pets</button>
+        <button class="filter-pill" data-filter="dogs">🐕 Dogs</button>
+        <button class="filter-pill" data-filter="cats">🐈 Cats</button>
+        <button class="filter-pill" data-filter="smart-tech">🤖 Smart Tech</button>
+        <button class="filter-pill" data-filter="beds">🛏️ Beds</button>
+        <button class="filter-pill" data-filter="feeding">🍽️ Feeding</button>
       </div>
     {%- endif -%}
 
-    <div class="product-grid">
+    <div class="product-grid" id="product-grid-{{ section.id }}">
       {%- if collection != blank and collection.products.size > 0 -%}
         {%- for product in collection.products limit: section.settings.products_to_show -%}
-          {%- render 'product-card', product: product -%}
+          <div class="product-card-wrapper" data-tags="{{ product.tags | join: ',' | downcase }}">
+            {%- render 'product-card', product: product -%}
+          </div>
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..section.settings.products_to_show) -%}
-          <div class="product-card">
+          <div class="product-card-wrapper" data-tags="all"><div class="product-card">
             <div class="product-card__image" style="background:var(--green-light);display:flex;align-items:center;justify-content:center;aspect-ratio:1;font-size:60px;">🐾</div>
             <div class="product-card__info">
               <div class="product-card__category">Pet Essentials</div>
@@ -49,12 +51,30 @@
                 <button class="product-card__add-btn">+</button>
               </div>
             </div>
-          </div>
+          </div></div>
         {%- endfor -%}
       {%- endif -%}
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll('.filter-pill[data-filter]').forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      var filter = this.dataset.filter;
+      document.querySelectorAll('.filter-pill[data-filter]').forEach(function(p) { p.classList.remove('is-active'); });
+      this.classList.add('is-active');
+      document.querySelectorAll('#product-grid-{{ section.id }} .product-card-wrapper').forEach(function(card) {
+        var tags = card.dataset.tags || '';
+        if (filter === 'all' || tags.split(',').map(function(t){ return t.trim(); }).indexOf(filter) !== -1) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
