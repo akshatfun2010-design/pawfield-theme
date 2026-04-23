@@ -37,10 +37,7 @@
           <span class="product-card__original-price">{{ product.compare_at_price | money }}</span>
         {%- endif -%}
       </div>
-      <form action="{{ routes.cart_add_url }}" method="post">
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button type="submit" class="product-card__add-btn" aria-label="Add to cart">+</button>
-      </form>
+      <button type="button" class="product-card__add-btn" aria-label="Add to cart" data-variant-id="{{ product.selected_or_first_available_variant.id }}" onclick="pawfieldAddToCart(this)">+</button>
     </div>
   </div>
 </div>
