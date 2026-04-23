@@ -82,6 +82,9 @@
     section.querySelectorAll('.sidebar-cat').forEach(function(btn) {
       btn.addEventListener('click', function() { setFilter(this.dataset.filter); });
     });
+
+    var hash = window.location.hash.replace('#', '').replace(/-/g, ' ');
+    if (hash) { setFilter(hash); }
   })();
 </script>
 
