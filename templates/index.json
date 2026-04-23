@@ -9,5 +9,5 @@
     "blog-posts": { "type": "blog-posts", "settings": {} },
     "newsletter": { "type": "newsletter", "settings": {} }
   },
-  "order": ["hero", "trust-badges", "featured-collection", "rich-text", "testimonials", "all-products", "blog-posts", "newsletter"]
+  "order": ["hero", "trust-badges", "featured-collection", "testimonials", "all-products", "newsletter"]
 }
