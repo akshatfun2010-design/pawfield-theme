@@ -66,8 +66,11 @@
       this.classList.add('is-active');
       document.querySelectorAll('#product-grid-{{ section.id }} .product-card-wrapper').forEach(function(card) {
         var tags = card.dataset.tags || '';
-        var tagList = tags.split(',').map(function(t){ return t.trim(); });
-        var matches = filter === 'all' || tagList.some(function(t){ return t === filter || t === filter + 's' || t + 's' === filter; });
+        var tagList = tags.split(',').map(function(t){ return t.trim().toLowerCase(); });
+        var filterAlt = filter.replace(' ', '-').replace('-', ' ');
+        var matches = filter === 'all' || tagList.some(function(t){
+          return t === filter || t === filter + 's' || t + 's' === filter || t === filterAlt || t === filterAlt + 's' || t + 's' === filterAlt;
+        });
         if (matches) {
           card.style.display = '';
         } else {
