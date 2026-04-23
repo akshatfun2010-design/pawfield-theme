@@ -32,9 +32,9 @@
 
       <a href="{{ routes.search_url }}" class="header__icon-btn" aria-label="Search">🔍</a>
       <a href="{{ routes.account_url }}" class="header__icon-btn" aria-label="Account">👤</a>
-      <a href="{{ routes.cart_url }}" class="header__cart-btn" aria-label="Cart">
+      <a href="{{ routes.cart_url }}" class="header__cart-btn" aria-label="Cart" id="cart-btn">
         🛒 Cart
-        <span class="header__cart-count">{{ cart.item_count }}</span>
+        <span class="header__cart-count" id="cart-count">{{ cart.item_count }}</span>
       </a>
 
       <button class="header__mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
