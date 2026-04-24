@@ -1,161 +1,43 @@
-<style>
-  #shopify-section-announcement-bar { display: none !important; }
-
-  .pf-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 9999;
-    background: #fff;
-    border-bottom: 1px solid #E5E5E0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-
-  .pf-announcement {
-    background: #3A6B35;
-    color: white;
-    text-align: center;
-    padding: 10px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .pf-nav-row {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    height: 72px;
-    box-sizing: border-box;
-  }
-
-  .pf-branding {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    flex-shrink: 0;
-  }
-
-  .pf-logo {
-    width: 60px;
-    height: auto;
-    display: block;
-    mix-blend-mode: multiply;
-  }
-
-  .pf-site-name {
-    font-size: 24px;
-    font-weight: 700;
-    color: #3A6B35;
-    margin: 0;
-    font-family: inherit;
-  }
-
-  .pf-nav {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .pf-nav a {
-    display: block;
-    padding: 8px 12px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #1C1C1C;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .pf-nav a:hover {
-    background: #F0F4EF;
-    color: #3A6B35;
-  }
-
-  .pf-mobile-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    color: #1C1C1C;
-    margin-left: auto;
-  }
-
-  body { padding-top: 120px; }
-
-  @media screen and (max-width: 768px) {
-    .pf-nav-row { height: auto; padding: 12px 16px; }
-    .pf-mobile-toggle { display: block; }
-    .pf-nav {
-      display: none;
-      width: 100%;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      padding-bottom: 8px;
-    }
-    .pf-nav.is-open { display: flex; }
-    .pf-nav a { padding: 14px 16px; border-radius: 0; }
-    .pf-nav-row { flex-wrap: wrap; }
-  }
-</style>
-
-<div class="pf-header" id="pf-header">
-  <div class="pf-announcement">
-    🐾 Free shipping on orders over $60 &middot; Use PAWFIELD10 for 10% off your first order
-  </div>
-  <div class="pf-nav-row">
-    <a href="/" class="pf-branding">
-      {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name }}" class="pf-logo" width="60" height="60">
-      {%- endif -%}
-      <span class="pf-site-name">{{ shop.name }}</span>
-    </a>
+<header class="site-header" style="position:fixed;top:0;left:0;right:0;width:100%;z-index:9999;background:#fff;border-bottom:1px solid #E8EDE7;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+  <div class="header__wrapper" style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;max-width:1280px;margin:0 auto;padding:0 32px;height:72px;gap:24px;">
 
     <nav aria-label="Main navigation">
-      <ul class="pf-nav" id="pf-nav">
-        <li><a href="/">Home</a></li>
+      <ul class="header__nav">
+        <li><a href="{{ routes.root_url }}">Home</a></li>
         <li><a href="/collections/all">Catalog</a></li>
         <li><a href="/pages/about-us">About Us</a></li>
-        <li><a href="/pages/contact">Contact</a></li>
+        <li><a href="{{ routes.account_url }}">Orders</a></li>
       </ul>
     </nav>
 
-    <button class="pf-mobile-toggle" id="pf-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
-  </div>
-</div>
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 160 }}" alt="{{ shop.name }}" width="160" height="44">
+      {%- else -%}
+        🐾 {{ shop.name }}
+      {%- endif -%}
+    </a>
 
-<script>
-  (function() {
-    var toggle = document.getElementById('pf-toggle');
-    var nav = document.getElementById('pf-nav');
-    if (toggle && nav) {
-      toggle.addEventListener('click', function() {
-        var open = nav.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', open);
-      });
-    }
-  })();
-</script>
+    <div class="header__icons" style="justify-self:end;">
+      <a href="{{ routes.cart_url }}" class="header__cart-btn" aria-label="Cart" id="cart-btn">
+        🛒 Cart
+        <span class="header__cart-count" id="cart-count">{{ cart.item_count }}</span>
+      </a>
+      <button class="header__mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
+    </div>
+
+  </div>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <ul>
+      <li><a href="{{ routes.root_url }}">Home</a></li>
+      <li><a href="/collections/all">Catalog</a></li>
+      <li><a href="/pages/about-us">About Us</a></li>
+      <li><a href="{{ routes.account_url }}">Orders</a></li>
+      <li><a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a></li>
+    </ul>
+  </nav>
+</header>
 
 {% schema %}
 {
@@ -165,6 +47,18 @@
       "type": "image_picker",
       "id": "logo",
       "label": "Logo image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency",
+      "label": "Show currency selector",
+      "default": true
     }
   ]
 }
