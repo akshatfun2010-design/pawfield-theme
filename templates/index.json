@@ -9,19 +9,23 @@
  */
 {
   "sections": {
+    "1776998700313f74cb": {
+      "type": "_blocks",
+      "settings": {}
+    },
     "1776995760c3e8fb1a": {
       "type": "_blocks",
       "blocks": {
         "ai_gen_block_141bde3_eCeHXF": {
           "type": "ai_gen_block_141bde3",
           "settings": {
-            "logo": "shopify://shop_images/pawfield_logo.png",
+            "logo": "shopify://shop_images/pawfield_logo-removebg-preview.png",
             "logo_width": 60,
             "show_site_name": true,
             "site_name": "PawField",
             "site_name_size": 24,
             "site_name_weight": "700",
-            "site_name_color": "#3A6B35",
+            "site_name_color": "#3a6b35",
             "home_url": "",
             "show_home": true,
             "home_label": "Home",
@@ -43,12 +47,12 @@
             "nav_gap": 16,
             "nav_link_padding": 8,
             "nav_border_radius": 6,
-            "nav_text_color": "#1C1C1C",
-            "nav_hover_color": "#3A6B35",
-            "nav_hover_bg": "#F0F4EF",
-            "background_color": "#FAFAF6",
+            "nav_text_color": "#1c1c1c",
+            "nav_hover_color": "#3a6b35",
+            "nav_hover_bg": "#f0f4ef",
+            "background_color": "#fafaf6",
             "border_width": 1,
-            "border_color": "#E5E5E0",
+            "border_color": "#e5e5e0",
             "max_width": 1400,
             "vertical_padding": 20,
             "horizontal_padding": 24
@@ -186,6 +190,7 @@
     }
   },
   "order": [
+    "1776998700313f74cb",
     "1776995760c3e8fb1a",
     "hero",
     "trust-badges",
