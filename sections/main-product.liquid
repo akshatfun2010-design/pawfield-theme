@@ -49,22 +49,66 @@
     {%- unless product.has_only_default_variant -%}
       <div class="product-info__variants" style="margin:20px 0;">
         {%- for option in product.options_with_values -%}
-          <div style="margin-bottom:14px;">
-            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">
-              {{ option.name }}: <span id="selected-{{ option.position }}" style="font-weight:400;text-transform:none;">{{ option.selected_value }}</span>
-            </div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              {%- for value in option.values -%}
-                <button
-                  type="button"
-                  class="variant-btn {% if option.selected_value == value %}variant-btn--active{% endif %}"
-                  data-option-position="{{ option.position }}"
-                  data-value="{{ value }}"
-                  style="padding:8px 16px;border:2px solid {% if option.selected_value == value %}var(--green){% else %}var(--border){% endif %};border-radius:50px;font-size:13px;font-family:var(--font-body);cursor:pointer;background:{% if option.selected_value == value %}var(--green){% else %}white{% endif %};color:{% if option.selected_value == value %}white{% else %}var(--dark){% endif %};transition:all 0.2s;">
-                  {{ value }}
-                </button>
-              {%- endfor -%}
-            </div>
+          {%- assign option_lower = option.name | downcase -%}
+          {%- assign is_bundle = false -%}
+          {%- if option_lower contains 'pack' or option_lower contains 'bundle' or option_lower contains 'quantity' or option_lower contains 'size' -%}
+            {%- assign is_bundle = true -%}
+          {%- endif -%}
+
+          <div style="margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">{{ option.name }}</div>
+
+            {%- if is_bundle -%}
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                {%- for value in option.values -%}
+                  {%- assign opt_pos = option.position | minus: 1 -%}
+                  {%- assign bundle_price = nil -%}
+                  {%- assign bundle_compare = nil -%}
+                  {%- for variant in product.variants -%}
+                    {%- if variant.options[opt_pos] == value -%}
+                      {%- assign bundle_price = variant.price -%}
+                      {%- assign bundle_compare = variant.compare_at_price -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- assign save_pct = 0 -%}
+                  {%- if bundle_compare > bundle_price -%}
+                    {%- assign save_pct = bundle_compare | minus: bundle_price | times: 100 | divided_by: bundle_compare -%}
+                  {%- endif -%}
+                  <button type="button" class="variant-btn bundle-card {% if option.selected_value == value %}bundle-card--active{% endif %}"
+                    data-option-position="{{ option.position }}" data-value="{{ value }}"
+                    style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border:2px solid {% if option.selected_value == value %}var(--green){% else %}var(--border){% endif %};border-radius:12px;background:{% if option.selected_value == value %}var(--green-light){% else %}white{% endif %};cursor:pointer;font-family:var(--font-body);width:100%;text-align:left;transition:all 0.2s;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                      <div style="width:18px;height:18px;border-radius:50%;border:2px solid {% if option.selected_value == value %}var(--green){% else %}var(--border){% endif %};background:{% if option.selected_value == value %}var(--green){% else %}white{% endif %};flex-shrink:0;"></div>
+                      <div>
+                        <div style="font-weight:600;font-size:14px;color:var(--dark);">{{ value }}</div>
+                        {%- if save_pct > 0 -%}
+                          <div style="font-size:12px;color:var(--green);font-weight:600;">SAVE {{ save_pct }}%</div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                    <div style="text-align:right;">
+                      {%- if bundle_price -%}
+                        <div style="font-weight:700;font-size:16px;color:var(--dark);">{{ bundle_price | money }}</div>
+                        {%- if bundle_compare > bundle_price -%}
+                          <div style="font-size:12px;color:var(--muted);text-decoration:line-through;">{{ bundle_compare | money }}</div>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </div>
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                {%- for value in option.values -%}
+                  <button type="button" class="variant-btn {% if option.selected_value == value %}variant-btn--active{% endif %}"
+                    data-option-position="{{ option.position }}" data-value="{{ value }}"
+                    style="padding:8px 16px;border:2px solid {% if option.selected_value == value %}var(--green){% else %}var(--border){% endif %};border-radius:50px;font-size:13px;font-family:var(--font-body);cursor:pointer;background:{% if option.selected_value == value %}var(--green){% else %}white{% endif %};color:{% if option.selected_value == value %}white{% else %}var(--dark){% endif %};transition:all 0.2s;">
+                    {{ value }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
           </div>
         {%- endfor -%}
       </div>
