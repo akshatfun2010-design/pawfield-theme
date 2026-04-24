@@ -130,13 +130,13 @@
       border-radius: 0;
     }
   }
-  body {
-  padding-top: 80px;
-}
+  body { padding-top: 120px; }
+  #shopify-section-announcement-bar { display: none !important; }
 
 {% endstyle %}
 
 <ai-header-{{ ai_gen_id }} class="ai-header-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div style="background:#3A6B35;color:white;text-align:center;padding:10px 16px;font-size:13px;font-weight:500;width:100%;letter-spacing:0.3px;">🐾 Free shipping on orders over $60 &middot; Use PAWFIELD10 for 10% off your first order</div>
   <div class="ai-header-container-{{ ai_gen_id }}">
     <a href="{{ block.settings.home_url | default: '/' }}" class="ai-header-branding-{{ ai_gen_id }}">
       {% if block.settings.logo %}
@@ -171,7 +171,7 @@
 
         {% if block.settings.show_catalog %}
           <li class="ai-header-nav-item-{{ ai_gen_id }}">
-            <a href="{{ block.settings.catalog_url }}" class="ai-header-nav-link-{{ ai_gen_id }}">
+            <a href="{{ block.settings.catalog_url | default: "/collections/all" }}" class="ai-header-nav-link-{{ ai_gen_id }}">
               {{ block.settings.catalog_label }}
             </a>
           </li>
@@ -179,7 +179,7 @@
 
         {% if block.settings.show_about %}
           <li class="ai-header-nav-item-{{ ai_gen_id }}">
-            <a href="{{ block.settings.about_url }}" class="ai-header-nav-link-{{ ai_gen_id }}">
+            <a href="{{ block.settings.about_url | default: "/pages/about-us" }}" class="ai-header-nav-link-{{ ai_gen_id }}">
               {{ block.settings.about_label }}
             </a>
           </li>
@@ -187,7 +187,7 @@
 
         {% if block.settings.show_contact %}
           <li class="ai-header-nav-item-{{ ai_gen_id }}">
-            <a href="{{ block.settings.contact_url }}" class="ai-header-nav-link-{{ ai_gen_id }}">
+            <a href="{{ block.settings.contact_url | default: "/pages/contact" }}" class="ai-header-nav-link-{{ ai_gen_id }}">
               {{ block.settings.contact_label }}
             </a>
           </li>
