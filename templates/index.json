@@ -9,6 +9,30 @@
  */
 {
   "sections": {
+    "1777009360e1341063": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_27f222f_KVbRFz": {
+          "type": "ai_gen_block_27f222f",
+          "settings": {
+            "message": "🐾 Free shipping on orders over $60 · Delivered in 5–10 days · 30-day money-back guarantee",
+            "link": "",
+            "enable_scrolling": false,
+            "scroll_speed": 15,
+            "background_color": "#3A6B35",
+            "text_color": "#FFFFFF",
+            "font_size": 14,
+            "font_weight": "500",
+            "vertical_padding": 12
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_27f222f_KVbRFz"
+      ],
+      "settings": {}
+    },
     "1776998700313f74cb": {
       "type": "_blocks",
       "settings": {}
@@ -196,12 +220,12 @@
           "settings": {
             "button_size": 60,
             "border_radius": 30,
-            "button_color": "#3A6B35",
-            "button_hover_color": "#2D5429",
-            "icon_color": "#FFFFFF",
+            "button_color": "#3a6b35",
+            "button_hover_color": "#2d5429",
+            "icon_color": "#ffffff",
             "badge_size": 22,
-            "badge_color": "#D4882A",
-            "badge_text_color": "#FFFFFF",
+            "badge_color": "#d4882a",
+            "badge_text_color": "#ffffff",
             "bottom_position": 30,
             "right_position": 30,
             "mobile_bottom_position": 20,
@@ -217,6 +241,7 @@
     }
   },
   "order": [
+    "1777009360e1341063",
     "1776998700313f74cb",
     "1776995760c3e8fb1a",
     "hero",
