@@ -1,6 +1,230 @@
+{% doc %}
+  @prompt
+    Create a custom announcements bar section that sits at the very top of the page. It should have a colored background bar (customizable color), with centered text for an announcement message. Include support for a scrolling or marquee effect option, and allow the merchant to customize the message, background color, and text color through theme settings.
+{% enddoc %}
+
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-announcement-bar-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    padding: {{ block.settings.vertical_padding }}px 20px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ai-announcement-bar__container-{{ ai_gen_id }} {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-announcement-bar__content-{{ ai_gen_id }} {
+    text-align: center;
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    white-space: nowrap;
+  }
+
+  .ai-announcement-bar__content-{{ ai_gen_id }}--scrolling {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ai-announcement-scroll-{{ ai_gen_id }} {{ block.settings.scroll_speed }}s linear infinite;
+  }
+
+  @keyframes ai-announcement-scroll-{{ ai_gen_id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .ai-announcement-bar__link-{{ ai_gen_id }} {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .ai-announcement-bar__link-{{ ai_gen_id }}:hover {
+    opacity: 0.8;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-announcement-bar__content-{{ ai_gen_id }} {
+      font-size: {{ block.settings.font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<announcement-bar-{{ ai_gen_id }}
+  class="ai-announcement-bar-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-announcement-bar__container-{{ ai_gen_id }}">
+    {% if block.settings.enable_scrolling %}
+      <div class="ai-announcement-bar__content-{{ ai_gen_id }} ai-announcement-bar__content-{{ ai_gen_id }}--scrolling">
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}" class="ai-announcement-bar__link-{{ ai_gen_id }}">
+            {{ block.settings.message }}
+          </a>
+        {% else %}
+          {{ block.settings.message }}
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="ai-announcement-bar__content-{{ ai_gen_id }}">
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}" class="ai-announcement-bar__link-{{ ai_gen_id }}">
+            {{ block.settings.message }}
+          </a>
+        {% else %}
+          {{ block.settings.message }}
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</announcement-bar-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AnnouncementBar{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.setupScrolling();
+      }
+
+      setupScrolling() {
+        const scrollingContent = this.querySelector('.ai-announcement-bar__content-{{ ai_gen_id }}--scrolling');
+        if (scrollingContent) {
+          const clone = scrollingContent.cloneNode(true);
+          scrollingContent.parentElement.appendChild(clone);
+        }
+      }
+    }
+
+    customElements.define('announcement-bar-{{ ai_gen_id }}', AnnouncementBar{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message",
+      "label": "Announcement message",
+      "default": "Welcome to our store! Free shipping on orders over $50"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scrolling",
+      "label": "Enable scrolling effect",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "unit": "s",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#3A6B35"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar"
+    }
+  ]
+}
 {% endschema %}
