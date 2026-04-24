@@ -238,6 +238,10 @@
         "ai_gen_block_cdedbbb_H8AMBF"
       ],
       "settings": {}
+    },
+    "1777013987c72db585": {
+      "type": "_blocks",
+      "settings": {}
     }
   },
   "order": [
@@ -251,6 +255,7 @@
     "all-products",
     "rich-text",
     "newsletter",
-    "177700724204904761"
+    "177700724204904761",
+    "1777013987c72db585"
   ]
 }
