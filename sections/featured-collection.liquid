@@ -1,4 +1,5 @@
 {%- assign collection = collections[section.settings.collection] -%}
+{%- assign best_seller_products = collections.all.products | where: 'available', true -%}
 
 <section class="section section--{{ section.settings.background }}" id="best-sellers" data-section-id="{{ section.id }}">
   <div class="section__inner">
@@ -28,52 +29,28 @@
       </div>
 
       <div class="product-grid" id="product-grid-{{ section.id }}">
-            {%- if collection != blank and collection.products.size > 0 -%}
-              {%- for product in collection.products limit: section.settings.products_to_show -%}
-                <div class="product-card-wrapper" data-tags="{{ product.tags | join: ',' | downcase }}">
-                  {%- render 'product-card', product: product -%}
-                </div>
-              {%- endfor -%}
-            {%- else -%}
-              {%- for i in (1..section.settings.products_to_show) -%}
-                <div class="product-card-wrapper" data-tags="all">
-                  <div class="product-card">
-                    <div class="product-card__image" style="background:var(--green-light);display:flex;align-items:center;justify-content:center;aspect-ratio:1;font-size:60px;">🐾</div>
-                    <div class="product-card__info">
-                      <div class="product-card__category">Pet Essentials</div>
-                      <div class="product-card__title">Add your products from CJDropshipping</div>
-                      <div class="product-card__stars"><span class="product-card__stars-icons">★★★★★</span><span class="product-card__review-count">(0 reviews)</span></div>
-                      <div class="product-card__footer"><div><span class="product-card__price">$89</span></div><button class="product-card__add-btn">+</button></div>
-                    </div>
-                  </div>
-                </div>
-              {%- endfor -%}
-            {%- endif -%}
+        {%- assign shown = 0 -%}
+        {%- for product in collections.all.products -%}
+          {%- if product.tags contains 'best-seller' and shown < section.settings.products_to_show -%}
+            <div class="product-card-wrapper" data-tags="{{ product.tags | join: ',' | downcase }}">
+              {%- render 'product-card', product: product -%}
+            </div>
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     {%- else -%}
 
       <div class="product-grid" id="product-grid-{{ section.id }}">
-        {%- if collection != blank and collection.products.size > 0 -%}
-          {%- for product in collection.products limit: section.settings.products_to_show -%}
+        {%- assign shown = 0 -%}
+        {%- for product in collections.all.products -%}
+          {%- if product.tags contains 'best-seller' and shown < section.settings.products_to_show -%}
             <div class="product-card-wrapper" data-tags="{{ product.tags | join: ',' | downcase }}">
               {%- render 'product-card', product: product -%}
             </div>
-          {%- endfor -%}
-        {%- else -%}
-          {%- for i in (1..section.settings.products_to_show) -%}
-            <div class="product-card-wrapper" data-tags="all">
-              <div class="product-card">
-                <div class="product-card__image" style="background:var(--green-light);display:flex;align-items:center;justify-content:center;aspect-ratio:1;font-size:60px;">🐾</div>
-                <div class="product-card__info">
-                  <div class="product-card__category">Pet Essentials</div>
-                  <div class="product-card__title">Add your products from CJDropshipping</div>
-                  <div class="product-card__stars"><span class="product-card__stars-icons">★★★★★</span><span class="product-card__review-count">(0 reviews)</span></div>
-                  <div class="product-card__footer"><div><span class="product-card__price">$89</span></div><button class="product-card__add-btn">+</button></div>
-                </div>
-              </div>
-            </div>
-          {%- endfor -%}
-        {%- endif -%}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
 
     {%- endif -%}
