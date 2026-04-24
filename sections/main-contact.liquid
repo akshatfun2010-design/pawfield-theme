@@ -1,0 +1,218 @@
+<style>
+  .contact-page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  .contact-page__tag {
+    display: inline-block;
+    background: #EAF2E9;
+    color: #3A6B35;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+  }
+
+  .contact-page__title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1C1C1C;
+    margin: 0 0 10px;
+  }
+
+  .contact-page__subtitle {
+    font-size: 16px;
+    color: #6B7280;
+    margin: 0 0 40px;
+    line-height: 1.6;
+  }
+
+  .contact-page__info {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .contact-page__info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .contact-page__info-icon {
+    width: 36px;
+    height: 36px;
+    background: #EAF2E9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .contact-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .contact-form__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .contact-form__input,
+  .contact-form__textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #1C1C1C;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  .contact-form__input:focus,
+  .contact-form__textarea:focus {
+    border-color: #3A6B35;
+    box-shadow: 0 0 0 3px rgba(58, 107, 53, 0.12);
+  }
+
+  .contact-form__input::placeholder,
+  .contact-form__textarea::placeholder {
+    color: #9CA3AF;
+  }
+
+  .contact-form__textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .contact-form__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #3A6B35;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 36px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    align-self: flex-start;
+  }
+
+  .contact-form__submit:hover {
+    background: #2D5A28;
+    transform: translateY(-1px);
+  }
+
+  .contact-form__success {
+    background: #EAF2E9;
+    border: 1.5px solid #3A6B35;
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: #2D5A28;
+    font-weight: 500;
+    font-size: 15px;
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .contact-form__row { grid-template-columns: 1fr; }
+    .contact-page__title { font-size: 28px; }
+  }
+</style>
+
+<div class="contact-page">
+  <div class="contact-page__tag">🐾 Get in touch</div>
+  <h1 class="contact-page__title">Contact Us</h1>
+  <p class="contact-page__subtitle">Have a question about your order or our products? We're here to help — typically reply within 24 hours.</p>
+
+  <div class="contact-page__info">
+    <div class="contact-page__info-item">
+      <div class="contact-page__info-icon">📧</div>
+      <span>support@pawfield.co</span>
+    </div>
+    <div class="contact-page__info-item">
+      <div class="contact-page__info-icon">⏱️</div>
+      <span>Mon–Fri, 9am–6pm EST</span>
+    </div>
+    <div class="contact-page__info-item">
+      <div class="contact-page__info-icon">🚚</div>
+      <span>Order issues resolved in 24h</span>
+    </div>
+  </div>
+
+  {%- form 'contact', id: 'ContactForm' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="contact-form__success" style="display:block;">
+        ✅ Thanks for reaching out! We'll get back to you within 24 hours.
+      </div>
+    {%- else -%}
+      <div class="contact-form">
+        <div class="contact-form__row">
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="ContactForm-name">Name</label>
+            <input class="contact-form__input" type="text" id="ContactForm-name" name="contact[name]" placeholder="Your name" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+          </div>
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="ContactForm-email">Email <span style="color:#3A6B35;">*</span></label>
+            <input class="contact-form__input" type="email" id="ContactForm-email" name="contact[email]" required placeholder="your@email.com" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+          </div>
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="ContactForm-phone">Phone number</label>
+          <input class="contact-form__input" type="tel" id="ContactForm-phone" name="contact[phone]" placeholder="(optional)">
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="ContactForm-body">Message <span style="color:#3A6B35;">*</span></label>
+          <textarea class="contact-form__textarea" id="ContactForm-body" name="contact[body]" required placeholder="Tell us how we can help...">{{ form.body }}</textarea>
+        </div>
+        <button type="submit" class="contact-form__submit">
+          Send Message →
+        </button>
+      </div>
+    {%- endif -%}
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Contact",
+  "settings": []
+}
+{% endschema %}
