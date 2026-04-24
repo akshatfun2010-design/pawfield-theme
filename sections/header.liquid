@@ -1,14 +1,6 @@
 <header class="site-header">
   <div class="header__wrapper">
 
-    <a href="{{ routes.root_url }}" class="header__logo">
-      {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 160 }}" alt="{{ shop.name }}" width="160" height="44">
-      {%- else -%}
-        🐾 {{ shop.name }}
-      {%- endif -%}
-    </a>
-
     <nav aria-label="Main navigation">
       <ul class="header__nav">
         <li><a href="{{ routes.root_url }}">Home</a></li>
@@ -17,6 +9,14 @@
         <li><a href="{{ routes.account_url }}">Orders</a></li>
       </ul>
     </nav>
+
+    <a href="{{ routes.root_url }}" class="header__logo header__logo--center">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 160 }}" alt="{{ shop.name }}" width="160" height="44">
+      {%- else -%}
+        🐾 {{ shop.name }}
+      {%- endif -%}
+    </a>
 
     <div class="header__icons">
       <a href="{{ routes.cart_url }}" class="header__cart-btn" aria-label="Cart" id="cart-btn">
