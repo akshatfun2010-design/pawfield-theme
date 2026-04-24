@@ -19,8 +19,8 @@
             "link": "",
             "enable_scrolling": false,
             "scroll_speed": 15,
-            "background_color": "#3A6B35",
-            "text_color": "#FFFFFF",
+            "background_color": "#3a6b35",
+            "text_color": "#ffffff",
             "font_size": 14,
             "font_weight": "500",
             "vertical_padding": 12
