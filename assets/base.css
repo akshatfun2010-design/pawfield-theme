@@ -40,7 +40,9 @@ button { cursor: pointer; font-family: var(--font-body); }
 .site-header { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
 .header__wrapper { max-width: 1280px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .header__logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: var(--green); }
+.header__logo--center { position: absolute; left: 50%; transform: translateX(-50%); }
 .header__logo img { height: 44px; width: auto; }
+.header__wrapper { position: relative; }
 .header__nav { display: flex; gap: 32px; list-style: none; }
 .header__nav a { font-size: 14px; font-weight: 500; color: var(--text); transition: color 0.2s; padding: 4px 0; border-bottom: 2px solid transparent; }
 .header__nav a:hover { color: var(--green); border-bottom-color: var(--green); }
