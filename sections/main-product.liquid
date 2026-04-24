@@ -8,7 +8,7 @@
   <div class="product-gallery">
     <div class="product-gallery__main">
       {%- if product.featured_image -%}
-        <img id="mainProductImage" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}" width="800" height="800" loading="eager">
+        <img id="mainProductImage" src="{{ product.featured_image | image_url: width: 1600 }}" alt="{{ product.title }}" width="800" height="800" loading="eager">
       {%- else -%}
         <span style="font-size:100px;">🐾</span>
       {%- endif -%}
@@ -16,7 +16,7 @@
     {%- if product.images.size > 1 -%}
       <div class="product-gallery__thumbs">
         {%- for image in product.images limit: 5 -%}
-          <div class="product-gallery__thumb {% if forloop.first %}is-active{% endif %}" data-image-url="{{ image | image_url: width: 800 }}">
+          <div class="product-gallery__thumb {% if forloop.first %}is-active{% endif %}" data-image-url="{{ image | image_url: width: 1600 }}">
             <img src="{{ image | image_url: width: 160 }}" alt="{{ product.title }}" width="80" height="80" loading="lazy">
           </div>
         {%- endfor -%}
