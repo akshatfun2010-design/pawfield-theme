@@ -1,6 +1,286 @@
+{% doc %}
+  @prompt
+    Create a floating cart button that is fixed on the page (outside the header), positioned in the bottom right corner. The button should show a cart icon and display a badge with the current cart item count. When clicked, it should open the cart drawer or navigate to the cart page. The button should be visible on all pages including the homepage.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-floating-cart-{{ ai_gen_id }} {
+    display: block;
+    position: fixed;
+    bottom: {{ block.settings.bottom_position }}px;
+    right: {{ block.settings.right_position }}px;
+    z-index: 9999;
+  }
+
+  .ai-floating-cart-button-{{ ai_gen_id }} {
+    position: relative;
+    width: {{ block.settings.button_size }}px;
+    height: {{ block.settings.button_size }}px;
+    border-radius: {{ block.settings.border_radius }}px;
+    background-color: {{ block.settings.button_color }};
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: {{ block.settings.icon_color }};
+  }
+
+  .ai-floating-cart-button-{{ ai_gen_id }}:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background-color: {{ block.settings.button_hover_color }};
+  }
+
+  .ai-floating-cart-icon-{{ ai_gen_id }} {
+    width: calc({{ block.settings.button_size }}px * 0.5);
+    height: calc({{ block.settings.button_size }}px * 0.5);
+  }
+
+  .ai-floating-cart-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: {{ block.settings.badge_size }}px;
+    height: {{ block.settings.badge_size }}px;
+    border-radius: 50%;
+    background-color: {{ block.settings.badge_color }};
+    color: {{ block.settings.badge_text_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc({{ block.settings.badge_size }}px * 0.6);
+    font-weight: 600;
+    padding: 0 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-floating-cart-badge-{{ ai_gen_id }}:empty {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-floating-cart-{{ ai_gen_id }} {
+      bottom: {{ block.settings.mobile_bottom_position }}px;
+      right: {{ block.settings.mobile_right_position }}px;
+    }
+
+    .ai-floating-cart-button-{{ ai_gen_id }} {
+      width: calc({{ block.settings.button_size }}px * 0.85);
+      height: calc({{ block.settings.button_size }}px * 0.85);
+    }
+
+    .ai-floating-cart-icon-{{ ai_gen_id }} {
+      width: calc({{ block.settings.button_size }}px * 0.85 * 0.5);
+      height: calc({{ block.settings.button_size }}px * 0.85 * 0.5);
+    }
+  }
+{% endstyle %}
+
+<floating-cart-button-{{ ai_gen_id }} class="ai-floating-cart-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <a
+    href="/cart"
+    class="ai-floating-cart-button-{{ ai_gen_id }}"
+    aria-label="Shopping cart with {{ cart.item_count }} items"
+  >
+    <svg
+      class="ai-floating-cart-icon-{{ ai_gen_id }}"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+    <span class="ai-floating-cart-badge-{{ ai_gen_id }}" data-cart-count>
+      {% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}
+    </span>
+  </a>
+</floating-cart-button-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FloatingCartButton{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.badge = this.querySelector('[data-cart-count]');
+        this.button = this.querySelector('.ai-floating-cart-button-{{ ai_gen_id }}');
+      }
+
+      connectedCallback() {
+        this.setupCartListener();
+      }
+
+      setupCartListener() {
+        document.addEventListener('cart:updated', (event) => {
+          this.updateCartCount(event.detail.cart.item_count);
+        });
+
+        fetch('/cart.js')
+          .then(response => response.json())
+          .then(cart => {
+            this.updateCartCount(cart.item_count);
+          })
+          .catch(error => {
+            console.error('Error fetching cart:', error);
+          });
+      }
+
+      updateCartCount(count) {
+        if (this.badge) {
+          if (count > 0) {
+            this.badge.textContent = count;
+            this.badge.style.display = 'flex';
+          } else {
+            this.badge.textContent = '';
+            this.badge.style.display = 'none';
+          }
+          
+          if (this.button) {
+            this.button.setAttribute('aria-label', `Shopping cart with ${count} items`);
+          }
+        }
+      }
+    }
+
+    customElements.define('floating-cart-button-{{ ai_gen_id }}', FloatingCartButton{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Floating cart button",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Button size",
+      "min": 50,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Background color",
+      "default": "#3A6B35"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Hover background color",
+      "default": "#2D5429"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Badge style"
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Badge size",
+      "min": 18,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge background color",
+      "default": "#D4882A"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Position on desktop"
+    },
+    {
+      "type": "range",
+      "id": "bottom_position",
+      "label": "Distance from bottom",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "right_position",
+      "label": "Distance from right",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Position on mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_bottom_position",
+      "label": "Distance from bottom",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_right_position",
+      "label": "Distance from right",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Floating cart button"
+    }
+  ]
+}
 {% endschema %}
