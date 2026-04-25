@@ -1,0 +1,196 @@
+{% style %}
+  #shopify-section-pf-global-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+    background: transparent !important;
+  }
+  .pf-gh-bar {
+    background: #3A6B35 !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.3px !important;
+    display: block !important;
+    font-family: inherit !important;
+  }
+  .pf-gh-wrap {
+    background: #FAFAF6 !important;
+    border-bottom: 1px solid #E5E5E0 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+  }
+  .pf-gh-inner {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 0 24px !important;
+    height: 68px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 32px !important;
+  }
+  .pf-gh-logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    text-decoration: none !important;
+    font-size: 21px !important;
+    font-weight: 700 !important;
+    color: #3A6B35 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    font-family: inherit !important;
+  }
+  .pf-gh-logo img { height: 40px !important; width: auto !important; display: block !important; }
+  .pf-gh-nav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 1 !important;
+  }
+  .pf-gh-nav li { margin: 0 !important; padding: 0 !important; list-style: none !important; }
+  .pf-gh-nav a {
+    display: block !important;
+    padding: 8px 14px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    color: #1C1C1C !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+    font-family: inherit !important;
+  }
+  .pf-gh-nav a:hover { background: #F0F4EF !important; color: #3A6B35 !important; }
+  .pf-gh-right {
+    margin-left: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-shrink: 0 !important;
+  }
+  .pf-gh-cart {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 9px 18px !important;
+    background: #3A6B35 !important;
+    color: #fff !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+  }
+  .pf-gh-cart:hover { background: #2D5A28 !important; color: #fff !important; }
+  .pf-gh-count {
+    background: #fff !important;
+    color: #3A6B35 !important;
+    border-radius: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+  .pf-gh-burger {
+    display: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 8px !important;
+    font-size: 22px !important;
+    line-height: 1 !important;
+    color: #1C1C1C !important;
+    flex-shrink: 0 !important;
+  }
+  .pf-gh-mobile {
+    display: none !important;
+    flex-direction: column !important;
+    background: #FAFAF6 !important;
+    border-top: 1px solid #F0F0EC !important;
+  }
+  .pf-gh-mobile.open { display: flex !important; }
+  .pf-gh-mobile a {
+    padding: 14px 24px !important;
+    color: #1C1C1C !important;
+    text-decoration: none !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    border-bottom: 1px solid #F0F0EC !important;
+    display: block !important;
+    font-family: inherit !important;
+  }
+  .pf-gh-mobile a:hover { background: #F5F7F4 !important; color: #3A6B35 !important; }
+  @media (max-width: 768px) {
+    .pf-gh-bar { font-size: 11px !important; padding: 7px 12px !important; }
+    .pf-gh-nav { display: none !important; }
+    .pf-gh-burger { display: block !important; }
+    .pf-gh-cart-label { display: none !important; }
+  }
+{% endstyle %}
+
+<div class="pf-gh-bar">🔥 Storewide Summer Sale — Everything 30% Off &middot; Free shipping on orders over $60 &middot; Use PAWFIELD10 for 10% off</div>
+<div class="pf-gh-wrap">
+  <div class="pf-gh-inner">
+    <a href="{{ routes.root_url }}" class="pf-gh-logo">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" height="40" loading="eager">
+      {%- else -%}
+        🐾 {{ shop.name }}
+      {%- endif -%}
+    </a>
+    <nav aria-label="Main navigation">
+      <ul class="pf-gh-nav">
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="/collections/all">Catalog</a></li>
+        <li><a href="/pages/about-us">About Us</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="pf-gh-right">
+      <a href="{{ routes.cart_url }}" class="pf-gh-cart" aria-label="Cart">
+        🛒 <span class="pf-gh-cart-label">Cart</span>
+        <span class="pf-gh-count" id="cart-count">{{ cart.item_count }}</span>
+      </a>
+      <button class="pf-gh-burger" id="pfGHBurger" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+  <nav class="pf-gh-mobile" id="pfGHMobile" aria-label="Mobile navigation">
+    <a href="{{ routes.root_url }}">Home</a>
+    <a href="/collections/all">Catalog</a>
+    <a href="/pages/about-us">About Us</a>
+    <a href="/pages/contact">Contact</a>
+    <a href="{{ routes.cart_url }}">🛒 Cart ({{ cart.item_count }})</a>
+  </nav>
+</div>
+
+<script>
+  (function() {
+    var b = document.getElementById('pfGHBurger');
+    var m = document.getElementById('pfGHMobile');
+    if (b && m) {
+      b.addEventListener('click', function() {
+        m.classList.toggle('open');
+        b.textContent = m.classList.contains('open') ? '✕' : '☰';
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Global Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image" }
+  ]
+}
+{% endschema %}
