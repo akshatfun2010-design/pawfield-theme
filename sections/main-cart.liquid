@@ -1,3 +1,18 @@
+<style>
+  @media (max-width: 768px) {
+    .cart-page { padding: 20px 16px; }
+    .cart-page__title { font-size: 24px; margin-bottom: 20px; }
+    .cart-item { grid-template-columns: 70px 1fr !important; gap: 12px !important; }
+    .cart-item__price-col { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; }
+    .cart-item__price { font-size: 16px; }
+    .cart-summary { padding: 16px; }
+    .cart-summary__title { font-size: 18px; margin-bottom: 14px; }
+    .cart-summary__total { font-size: 17px; }
+    .empty-cart-emoji { font-size: 56px !important; }
+    .empty-cart-title { font-size: 24px !important; }
+  }
+</style>
+
 <div class="cart-page">
   <a href="{{ routes.root_url }}" style="display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:14px;margin-bottom:20px;text-decoration:none;">← Continue Shopping</a>
   <h1 class="cart-page__title">Your Cart 🛒</h1>
