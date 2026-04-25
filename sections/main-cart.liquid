@@ -1,4 +1,35 @@
 <style>
+  .shipping-bar {
+    background: #F5F7F4;
+    border: 1.5px solid #D4E8D0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+  }
+  .shipping-bar__message {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .shipping-bar__message.unlocked {
+    color: #3A6B35;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .shipping-bar__track {
+    background: #E5E7EB;
+    border-radius: 50px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .shipping-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3A6B35, #5A9E52);
+    border-radius: 50px;
+    transition: width 0.4s ease;
+  }
   @media (max-width: 768px) {
     .cart-page { padding: 20px 16px; }
     .cart-page__title { font-size: 24px; margin-bottom: 20px; }
@@ -17,6 +48,21 @@
   <a href="{{ routes.root_url }}" style="display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:14px;margin-bottom:20px;text-decoration:none;">← Continue Shopping</a>
   <h1 class="cart-page__title">Your Cart 🛒</h1>
   {%- if cart.item_count > 0 -%}
+    {%- assign threshold = 6000 -%}
+    {%- assign remaining = threshold | minus: cart.total_price -%}
+    {%- assign progress = cart.total_price | times: 100 | divided_by: threshold -%}
+    {%- if progress > 100 -%}{%- assign progress = 100 -%}{%- endif -%}
+    <div class="shipping-bar" id="shipping-bar">
+      {%- if cart.total_price >= threshold -%}
+        <div class="shipping-bar__message unlocked" id="shipping-bar-msg">You've unlocked free shipping! 🎉</div>
+      {%- else -%}
+        <div class="shipping-bar__message" id="shipping-bar-msg">You're <strong>{{ remaining | money }}</strong> away from free shipping!</div>
+      {%- endif -%}
+      <div class="shipping-bar__track">
+        <div class="shipping-bar__fill" id="shipping-bar-fill" style="width:{{ progress }}%;"></div>
+      </div>
+    </div>
+
     <div id="cart-items">
       {%- for item in cart.items -%}
         <div class="cart-item" id="cart-item-{{ item.key | replace: ':', '-' }}">
@@ -84,6 +130,22 @@
       var price = (cart.total_price / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
       if (subtotalEl) subtotalEl.textContent = price;
       if (totalEl) totalEl.textContent = price;
+
+      var threshold = 6000;
+      var msgEl = document.getElementById('shipping-bar-msg');
+      var fillEl = document.getElementById('shipping-bar-fill');
+      if (msgEl && fillEl) {
+        var pct = Math.min(Math.round(cart.total_price / threshold * 100), 100);
+        fillEl.style.width = pct + '%';
+        if (cart.total_price >= threshold) {
+          msgEl.className = 'shipping-bar__message unlocked';
+          msgEl.innerHTML = "You've unlocked free shipping! 🎉";
+        } else {
+          var remaining = ((threshold - cart.total_price) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+          msgEl.className = 'shipping-bar__message';
+          msgEl.innerHTML = "You're <strong>" + remaining + "</strong> away from free shipping!";
+        }
+      }
 
       if (quantity === 0) {
         var itemEl = document.getElementById('cart-item-' + key.replace(':', '-'));
