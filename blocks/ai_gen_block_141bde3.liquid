@@ -132,11 +132,13 @@
   }
   body { padding-top: 120px; }
   #shopify-section-announcement-bar { display: none !important; }
+  .pf-announce { background:#3A6B35;color:white;text-align:center;padding:10px 16px;font-size:13px;font-weight:500;width:100%;box-sizing:border-box;letter-spacing:0.3px; }
+  @media screen and (max-width: 768px) { .pf-announce { font-size:11px;padding:7px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; } body { padding-top: 105px; } }
 
 {% endstyle %}
 
 <ai-header-{{ ai_gen_id }} class="ai-header-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
-  <div style="background:#3A6B35;color:white;text-align:center;padding:10px 16px;font-size:13px;font-weight:500;width:100%;letter-spacing:0.3px;">🐾 Free shipping on orders over $60 &middot; Use PAWFIELD10 for 10% off your first order</div>
+  <div class="pf-announce">🐾 Free shipping on orders over $60 &middot; Use PAWFIELD10 for 10% off</div>
   <div class="ai-header-container-{{ ai_gen_id }}">
     <a href="{{ block.settings.home_url | default: '/' }}" class="ai-header-branding-{{ ai_gen_id }}">
       {% if block.settings.logo %}
