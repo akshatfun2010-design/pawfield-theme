@@ -1,19 +1,14 @@
 <style>
-  #shopify-section-announcement-bar { display: none !important; }
-
   .pf-header {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     width: 100%;
     z-index: 9999;
-    background: #fff;
+    background: #FAFAF6;
     border-bottom: 1px solid #E5E5E0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
-
-  .pf-announcement {
+  .pf-announce-bar {
     background: #3A6B35;
     color: white;
     text-align: center;
@@ -21,137 +16,164 @@
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.3px;
-    width: 100%;
-    box-sizing: border-box;
   }
-
-  .pf-nav-row {
+  .pf-nav-wrap {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 24px;
+    height: 68px;
     display: flex;
     align-items: center;
-    gap: 40px;
-    height: 72px;
-    box-sizing: border-box;
+    gap: 32px;
   }
-
-  .pf-branding {
+  .pf-logo-link {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     text-decoration: none;
-    flex-shrink: 0;
-  }
-
-  .pf-logo {
-    width: 60px;
-    height: auto;
-    display: block;
-    mix-blend-mode: multiply;
-  }
-
-  .pf-site-name {
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 700;
     color: #3A6B35;
-    margin: 0;
-    font-family: inherit;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
-
-  .pf-nav {
+  .pf-logo-link img { height: 40px; width: auto; display: block; }
+  .pf-nav-list {
     display: flex;
     align-items: center;
     gap: 4px;
     list-style: none;
     margin: 0;
     padding: 0;
+    flex: 1;
   }
-
-  .pf-nav a {
+  .pf-nav-list a {
     display: block;
-    padding: 8px 12px;
-    font-size: 16px;
+    padding: 8px 14px;
+    font-size: 15px;
     font-weight: 500;
     color: #1C1C1C;
     text-decoration: none;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
   }
-
-  .pf-nav a:hover {
-    background: #F0F4EF;
+  .pf-nav-list a:hover { background: #F0F4EF; color: #3A6B35; }
+  .pf-header-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .pf-cart-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    background: #3A6B35;
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.15s;
+  }
+  .pf-cart-btn:hover { background: #2D5A28; color: white; }
+  .pf-cart-count {
+    background: white;
     color: #3A6B35;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    flex-shrink: 0;
   }
-
-  .pf-mobile-toggle {
+  .pf-burger {
     display: none;
     background: none;
     border: none;
     cursor: pointer;
     padding: 8px;
+    font-size: 22px;
+    line-height: 1;
     color: #1C1C1C;
-    margin-left: auto;
+    flex-shrink: 0;
   }
+  .pf-mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: #FAFAF6;
+    border-top: 1px solid #F0F0EC;
+  }
+  .pf-mobile-menu.is-open { display: flex; }
+  .pf-mobile-menu a {
+    padding: 14px 24px;
+    color: #1C1C1C;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid #F0F0EC;
+    transition: background 0.1s;
+  }
+  .pf-mobile-menu a:hover { background: #F5F7F4; color: #3A6B35; }
 
-  body { padding-top: 120px; }
-
-  @media screen and (max-width: 768px) {
-    .pf-nav-row { height: auto; padding: 12px 16px; }
-    .pf-mobile-toggle { display: block; }
-    .pf-nav {
-      display: none;
-      width: 100%;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      padding-bottom: 8px;
-    }
-    .pf-nav.is-open { display: flex; }
-    .pf-nav a { padding: 14px 16px; border-radius: 0; }
-    .pf-nav-row { flex-wrap: wrap; }
+  @media (max-width: 768px) {
+    .pf-announce-bar { font-size: 11px; padding: 7px 12px; }
+    .pf-nav-list { display: none; }
+    .pf-burger { display: block; }
+    .pf-cart-label { display: none; }
   }
 </style>
 
-<div class="pf-header" id="pf-header">
-  <div class="pf-announcement">
-    🐾 Free shipping on orders over $60 &middot; Use PAWFIELD10 for 10% off your first order
-  </div>
-  <div class="pf-nav-row">
-    <a href="/" class="pf-branding">
+<header class="pf-header" id="pf-global-header">
+  <div class="pf-announce-bar">🐾 Free shipping on orders over $60 &middot; Use PAWFIELD10 for 10% off</div>
+  <div class="pf-nav-wrap">
+    <a href="{{ routes.root_url }}" class="pf-logo-link">
       {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name }}" class="pf-logo" width="60" height="60">
+        <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" height="40" loading="eager">
+      {%- else -%}
+        🐾 {{ shop.name }}
       {%- endif -%}
-      <span class="pf-site-name">{{ shop.name }}</span>
     </a>
-
     <nav aria-label="Main navigation">
-      <ul class="pf-nav" id="pf-nav">
-        <li><a href="/">Home</a></li>
+      <ul class="pf-nav-list">
+        <li><a href="{{ routes.root_url }}">Home</a></li>
         <li><a href="/collections/all">Catalog</a></li>
         <li><a href="/pages/about-us">About Us</a></li>
         <li><a href="/pages/contact">Contact</a></li>
       </ul>
     </nav>
-
-    <button class="pf-mobile-toggle" id="pf-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
+    <div class="pf-header-actions">
+      <a href="{{ routes.cart_url }}" class="pf-cart-btn" aria-label="Cart">
+        🛒 <span class="pf-cart-label">Cart</span>
+        <span class="pf-cart-count" id="cart-count">{{ cart.item_count }}</span>
+      </a>
+      <button class="pf-burger" id="pfBurger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
   </div>
-</div>
+  <nav class="pf-mobile-menu" id="pfMobileMenu" aria-label="Mobile navigation">
+    <a href="{{ routes.root_url }}">Home</a>
+    <a href="/collections/all">Catalog</a>
+    <a href="/pages/about-us">About Us</a>
+    <a href="/pages/contact">Contact</a>
+    <a href="{{ routes.cart_url }}">🛒 Cart ({{ cart.item_count }})</a>
+  </nav>
+</header>
 
 <script>
   (function() {
-    var toggle = document.getElementById('pf-toggle');
-    var nav = document.getElementById('pf-nav');
-    if (toggle && nav) {
-      toggle.addEventListener('click', function() {
-        var open = nav.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', open);
+    var burger = document.getElementById('pfBurger');
+    var menu = document.getElementById('pfMobileMenu');
+    if (burger && menu) {
+      burger.addEventListener('click', function() {
+        var open = menu.classList.toggle('is-open');
+        burger.setAttribute('aria-expanded', open);
+        burger.textContent = open ? '✕' : '☰';
       });
     }
   })();
