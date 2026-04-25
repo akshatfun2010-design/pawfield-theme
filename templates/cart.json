@@ -1,6 +1,64 @@
 {
   "sections": {
-    "main": { "type": "main-cart", "settings": {} }
+    "pf-header": {
+      "type": "_blocks",
+      "blocks": {
+        "pf-header-block": {
+          "type": "ai_gen_block_141bde3",
+          "settings": {
+            "logo": "shopify://shop_images/pawfield_logo-removebg-preview.png",
+            "logo_width": 60,
+            "show_site_name": true,
+            "site_name": "PawField",
+            "site_name_size": 24,
+            "site_name_weight": "700",
+            "site_name_color": "#3a6b35",
+            "home_url": "",
+            "show_home": true,
+            "home_label": "Home",
+            "show_catalog": true,
+            "catalog_label": "Catalog",
+            "catalog_url": "",
+            "show_about": true,
+            "about_label": "About Us",
+            "about_url": "",
+            "show_contact": true,
+            "contact_label": "Contact",
+            "contact_url": "",
+            "custom_link_1_label": "",
+            "custom_link_1_url": "",
+            "custom_link_2_label": "",
+            "custom_link_2_url": "",
+            "nav_font_size": 16,
+            "nav_font_weight": "500",
+            "nav_gap": 16,
+            "nav_link_padding": 8,
+            "nav_border_radius": 6,
+            "nav_text_color": "#1c1c1c",
+            "nav_hover_color": "#3a6b35",
+            "nav_hover_bg": "#f0f4ef",
+            "background_color": "#fafaf6",
+            "border_width": 1,
+            "border_color": "#e5e5e0",
+            "max_width": 1400,
+            "vertical_padding": 20,
+            "horizontal_padding": 24
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "pf-header-block"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "main-cart",
+      "settings": {}
+    }
   },
-  "order": ["main"]
+  "order": [
+    "pf-header",
+    "main"
+  ]
 }
