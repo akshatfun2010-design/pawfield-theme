@@ -1,11 +1,11 @@
 {%- assign fake_compare = product.price | times: 10 | divided_by: 7 -%}
-{%- assign star_seed = product.id | modulo: 4 -%}
-{%- if star_seed == 0 -%}{%- assign fake_rating = "4.6" -%}
-{%- elsif star_seed == 1 -%}{%- assign fake_rating = "4.7" -%}
-{%- elsif star_seed == 2 -%}{%- assign fake_rating = "4.8" -%}
+{%- assign star_seed = product.id | modulo: 13 -%}
+{%- if star_seed < 3 -%}{%- assign fake_rating = "4.6" -%}
+{%- elsif star_seed < 7 -%}{%- assign fake_rating = "4.7" -%}
+{%- elsif star_seed < 10 -%}{%- assign fake_rating = "4.8" -%}
 {%- else -%}{%- assign fake_rating = "4.9" -%}
 {%- endif -%}
-{%- assign fake_count = product.id | modulo: 251 | plus: 150 -%}
+{%- assign fake_count = product.id | modulo: 179 | plus: 150 -%}
 <div class="product-card">
   <div class="product-card__badge product-card__badge--red">30% OFF</div>
 
