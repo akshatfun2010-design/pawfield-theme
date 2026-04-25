@@ -149,6 +149,43 @@
   .pdp-info__variants { margin: 20px 0; }
   .pdp-info__variant-group { margin-bottom: 16px; }
 
+  .pdp-qty {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    overflow: hidden;
+    width: fit-content;
+    margin-bottom: 14px;
+  }
+  .pdp-qty__btn {
+    background: #F9FAFB;
+    border: none;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .pdp-qty__btn:hover { background: #F0F4EF; color: #3A6B35; }
+  .pdp-qty__num {
+    width: 48px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1C1C1C;
+    border-left: 1.5px solid #E5E7EB;
+    border-right: 1.5px solid #E5E7EB;
+    height: 44px;
+    line-height: 44px;
+    user-select: none;
+  }
   .pdp-atc {
     display: flex;
     flex-direction: column;
@@ -404,7 +441,13 @@
 
     {%- form 'product', product, id: 'product-form' -%}
       <input type="hidden" name="id" id="variant-id" value="{{ current_variant.id }}">
+      <input type="hidden" name="quantity" id="pdp-qty-input" value="1">
       <div class="pdp-atc">
+        <div class="pdp-qty">
+          <button type="button" class="pdp-qty__btn" onclick="pdpChangeQty(-1)">−</button>
+          <span class="pdp-qty__num" id="pdp-qty-display">1</span>
+          <button type="button" class="pdp-qty__btn" onclick="pdpChangeQty(1)">+</button>
+        </div>
         <button type="submit" class="pdp-atc__btn" id="add-to-cart-btn" {% unless current_variant.available %}disabled{% endunless %}>
           {%- if current_variant.available -%}🛒 Add to Cart{%- else -%}Sold Out{%- endif -%}
         </button>
@@ -449,6 +492,15 @@
     return productVariants.find(function(v) {
       return v.options.every(function(opt, i) { return opt === selectedOptions[i]; });
     });
+  }
+
+  function pdpChangeQty(delta) {
+    var display = document.getElementById('pdp-qty-display');
+    var input = document.getElementById('pdp-qty-input');
+    var current = parseInt(display.textContent) || 1;
+    var next = Math.max(1, current + delta);
+    display.textContent = next;
+    input.value = next;
   }
 
   function updateProduct(variant) {
