@@ -1,3 +1,11 @@
+<style>
+  @media (max-width: 768px) {
+    .collection-layout { flex-direction: column !important; gap: 0 !important; }
+    .collection-sidebar { display: none !important; }
+    .collection-main { width: 100% !important; }
+  }
+</style>
+
 <section class="section section--cream" id="collection-section">
   <div class="section__inner">
     <a href="{{ routes.root_url }}" style="display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:14px;text-decoration:none;margin-bottom:20px;">← Back to Home</a>
@@ -8,9 +16,9 @@
       {%- endif -%}
     </div>
 
-    <div style="display:flex;gap:32px;align-items:flex-start;">
+    <div class="collection-layout" style="display:flex;gap:32px;align-items:flex-start;">
 
-      <div style="min-width:160px;background:white;border:1px solid var(--border);border-radius:16px;padding:20px;position:sticky;top:100px;flex-shrink:0;">
+      <div class="collection-sidebar" style="min-width:160px;background:white;border:1px solid var(--border);border-radius:16px;padding:20px;position:sticky;top:100px;flex-shrink:0;">
         <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:14px;">Categories</div>
         <div style="display:flex;flex-direction:column;gap:4px;">
           <button class="sidebar-cat is-active" data-filter="all">🐾 All Pets</button>
@@ -22,7 +30,7 @@
         </div>
       </div>
 
-      <div style="flex:1;min-width:0;">
+      <div class="collection-main" style="flex:1;min-width:0;">
         <div class="filter-pills">
           <button class="filter-pill is-active" data-filter="all">🐾 All</button>
           <button class="filter-pill" data-filter="dog">🐕 Dogs</button>
