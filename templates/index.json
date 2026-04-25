@@ -11,26 +11,6 @@
   "sections": {
     "1777009360e1341063": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_27f222f_KVbRFz": {
-          "type": "ai_gen_block_27f222f",
-          "settings": {
-            "message": "🐾 Free shipping on orders over $60 · Delivered in 5–10 days · 30-day money-back guarantee",
-            "link": "",
-            "enable_scrolling": false,
-            "scroll_speed": 15,
-            "background_color": "#3a6b35",
-            "text_color": "#ffffff",
-            "font_size": 14,
-            "font_weight": "500",
-            "vertical_padding": 12
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_27f222f_KVbRFz"
-      ],
       "settings": {}
     },
     "1776998700313f74cb": {
