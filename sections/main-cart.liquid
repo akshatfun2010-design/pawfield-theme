@@ -77,9 +77,9 @@
               <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">{{ item.variant.title }}</div>
             {%- endunless -%}
             <div class="cart-item__qty">
-              <button class="cart-item__qty-btn" type="button" onclick="updateCartItem('{{ item.key }}', {{ item.quantity | minus: 1 }})">−</button>
+              <button class="cart-item__qty-btn" type="button" onclick="var q=parseInt(document.getElementById('qty-{{ item.key | replace: ':', '-' }}').textContent);updateCartItem('{{ item.key }}',q-1)">−</button>
               <span class="cart-item__qty-num" id="qty-{{ item.key | replace: ':', '-' }}">{{ item.quantity }}</span>
-              <button class="cart-item__qty-btn" type="button" onclick="updateCartItem('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+              <button class="cart-item__qty-btn" type="button" onclick="var q=parseInt(document.getElementById('qty-{{ item.key | replace: ':', '-' }}').textContent);updateCartItem('{{ item.key }}',q+1)">+</button>
             </div>
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
@@ -93,7 +93,7 @@
     <div class="cart-summary" id="cart-summary">
       <h2 class="cart-summary__title">Order Summary</h2>
       <div class="cart-summary__line"><span>Subtotal</span><span id="cart-subtotal">{{ cart.total_price | money }}</span></div>
-      <div class="cart-summary__line"><span>Shipping</span><span id="cart-shipping" style="font-weight:600;{%- if cart.total_price >= threshold -%}color:var(--green);{%- else -%}color:#6B7280;{%- endif -%}">{%- if cart.total_price >= threshold -%}FREE{%- else -%}Add more to unlock{%- endif -%}</span></div>
+      <div class="cart-summary__line"><span>Shipping</span><span id="cart-shipping" style="font-weight:600;{%- if cart.total_price >= threshold -%}color:var(--green);{%- else -%}color:#374151;{%- endif -%}">{%- if cart.total_price >= threshold -%}FREE{%- else -%}$6.00{%- endif -%}</span></div>
       <div class="cart-summary__total"><span>Total</span><span id="cart-total">{{ cart.total_price | money }}</span></div>
       <a href="/checkout" class="btn btn--primary" style="width:100%;justify-content:center;font-size:16px;padding:16px;display:flex;">Checkout Securely 🔒</a>
       <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;">🔄 30-day returns · 🚚 Fast US shipping</p>
@@ -146,7 +146,7 @@
           var remaining = ((threshold - cart.total_price) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
           msgEl.className = 'shipping-bar__message';
           msgEl.innerHTML = "You're <strong>" + remaining + "</strong> away from free shipping!";
-          if (shippingEl) { shippingEl.textContent = 'Add more to unlock'; shippingEl.style.color = '#6B7280'; }
+          if (shippingEl) { shippingEl.textContent = '$6.00'; shippingEl.style.color = '#374151'; }
         }
       }
 
