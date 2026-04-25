@@ -93,7 +93,7 @@
     <div class="cart-summary" id="cart-summary">
       <h2 class="cart-summary__title">Order Summary</h2>
       <div class="cart-summary__line"><span>Subtotal</span><span id="cart-subtotal">{{ cart.total_price | money }}</span></div>
-      <div class="cart-summary__line"><span>Shipping</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
+      <div class="cart-summary__line"><span>Shipping</span><span id="cart-shipping" style="font-weight:600;{%- if cart.total_price >= threshold -%}color:var(--green);{%- else -%}color:#6B7280;{%- endif -%}">{%- if cart.total_price >= threshold -%}FREE{%- else -%}Add more to unlock{%- endif -%}</span></div>
       <div class="cart-summary__total"><span>Total</span><span id="cart-total">{{ cart.total_price | money }}</span></div>
       <a href="/checkout" class="btn btn--primary" style="width:100%;justify-content:center;font-size:16px;padding:16px;display:flex;">Checkout Securely 🔒</a>
       <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;">🔄 30-day returns · 🚚 Fast US shipping</p>
@@ -134,16 +134,19 @@
       var threshold = 6000;
       var msgEl = document.getElementById('shipping-bar-msg');
       var fillEl = document.getElementById('shipping-bar-fill');
+      var shippingEl = document.getElementById('cart-shipping');
       if (msgEl && fillEl) {
         var pct = Math.min(Math.round(cart.total_price / threshold * 100), 100);
         fillEl.style.width = pct + '%';
         if (cart.total_price >= threshold) {
           msgEl.className = 'shipping-bar__message unlocked';
           msgEl.innerHTML = "You've unlocked free shipping! 🎉";
+          if (shippingEl) { shippingEl.textContent = 'FREE'; shippingEl.style.color = 'var(--green)'; }
         } else {
           var remaining = ((threshold - cart.total_price) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
           msgEl.className = 'shipping-bar__message';
           msgEl.innerHTML = "You're <strong>" + remaining + "</strong> away from free shipping!";
+          if (shippingEl) { shippingEl.textContent = 'Add more to unlock'; shippingEl.style.color = '#6B7280'; }
         }
       }
 
