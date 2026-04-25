@@ -299,7 +299,7 @@
     {%- if product.images.size > 1 -%}
       <div class="pdp-gallery__thumbs">
         {%- for image in product.images limit: 6 -%}
-          <div class="pdp-gallery__thumb {% if forloop.first %}is-active{% endif %}" data-image-url="{{ image | image_url: width: 1600 }}">
+          <div class="pdp-gallery__thumb {% if forloop.first %}is-active{% endif %}" data-image-url="{{ image | image_url: width: 1600 }}" data-image-id="{{ image.id }}">
             <img src="{{ image | image_url: width: 160 }}" alt="{{ product.title }}" loading="lazy">
           </div>
         {%- endfor -%}
@@ -442,6 +442,17 @@
   function updateProduct(variant) {
     if (!variant) return;
     document.getElementById('variant-id').value = variant.id;
+
+    if (variant.featured_image) {
+      var matchThumb = document.querySelector('.pdp-gallery__thumb[data-image-id="' + variant.featured_image.id + '"]');
+      if (matchThumb) {
+        var imgEl = document.getElementById('mainProductImage');
+        if (imgEl) imgEl.src = matchThumb.dataset.imageUrl;
+        document.querySelectorAll('.pdp-gallery__thumb').forEach(function(t) { t.classList.remove('is-active'); });
+        matchThumb.classList.add('is-active');
+      }
+    }
+
     var price = (variant.price / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
     document.getElementById('price-display').textContent = price;
     var compareEl = document.getElementById('compare-price');
