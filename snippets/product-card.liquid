@@ -26,10 +26,12 @@
     <a href="{{ product.url }}">
       <div class="product-card__title">{{ product.title }}</div>
     </a>
+    {%- if product.metafields.reviews.rating_count > 0 -%}
     <div class="product-card__stars">
       <span class="product-card__stars-icons">★★★★★</span>
-      <span class="product-card__review-count">({{ product.metafields.reviews.rating_count | default: '0' }} reviews)</span>
+      <span class="product-card__review-count">({{ product.metafields.reviews.rating_count }} reviews)</span>
     </div>
+    {%- endif -%}
     <div class="product-card__footer">
       <div>
         <span class="product-card__price">{{ product.price | money }}</span>
