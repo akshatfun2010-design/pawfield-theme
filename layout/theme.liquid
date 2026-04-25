@@ -33,8 +33,7 @@
 
 <body class="{% if customer %}customer-logged-in{% endif %}">
 
-  {%- sections 'announcement-bar' -%}
-  {%- sections 'header' -%}
+  {%- render 'pf-header' -%}
 
   <main id="MainContent" role="main" tabindex="-1">
     {{ content_for_layout }}
