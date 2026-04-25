@@ -24,151 +24,17 @@
 
   {{ 'base.css' | asset_url | stylesheet_tag }}
   <style>
-    html, body { transform: none !important; filter: none !important; perspective: none !important; }
-
-    /* Hide old announcement bar and AI block — global header below handles all pages */
-    #shopify-section-announcement-bar { display: none !important; }
-    [class^="ai-header-"] { display: none !important; }
-
-    /* ── Global sticky header ── */
-    .pf-header {
-      position: fixed !important;
-      top: 0; left: 0; right: 0;
-      width: 100%;
-      z-index: 9999;
-      background: #FAFAF6;
-      border-bottom: 1px solid #E5E5E0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .pf-announce-bar {
-      background: #3A6B35 !important;
-      color: #fff !important;
-      text-align: center;
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.3px;
-    }
-    .pf-nav-wrap {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-    .pf-logo-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none !important;
-      font-size: 21px;
-      font-weight: 700;
-      color: #3A6B35 !important;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .pf-logo-link img { height: 40px; width: auto; display: block; }
-    .pf-nav-list {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      flex: 1;
-    }
-    .pf-nav-list li { margin: 0; padding: 0; }
-    .pf-nav-list a {
-      display: block;
-      padding: 8px 14px;
-      font-size: 15px;
-      font-weight: 500;
-      color: #1C1C1C !important;
-      text-decoration: none !important;
-      border-radius: 8px;
-      background: transparent;
-      transition: background 0.15s, color 0.15s;
-    }
-    .pf-nav-list a:hover { background: #F0F4EF; color: #3A6B35 !important; }
-    .pf-header-actions {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-    .pf-cart-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 18px;
-      background: #3A6B35 !important;
-      color: #fff !important;
-      border-radius: 50px;
-      text-decoration: none !important;
-      font-weight: 600;
-      font-size: 14px;
-      transition: background 0.15s;
-    }
-    .pf-cart-btn:hover { background: #2D5A28 !important; color: #fff !important; }
-    .pf-cart-count {
-      background: #fff;
-      color: #3A6B35;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 700;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-    .pf-burger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      font-size: 22px;
-      line-height: 1;
-      color: #1C1C1C;
-      flex-shrink: 0;
-    }
-    .pf-mobile-menu {
-      display: none;
-      flex-direction: column;
-      background: #FAFAF6;
-      border-top: 1px solid #F0F0EC;
-    }
-    .pf-mobile-menu.is-open { display: flex; }
-    .pf-mobile-menu a {
-      padding: 14px 24px;
-      color: #1C1C1C !important;
-      text-decoration: none !important;
-      font-size: 15px;
-      font-weight: 500;
-      border-bottom: 1px solid #F0F0EC;
-    }
-    .pf-mobile-menu a:hover { background: #F5F7F4; color: #3A6B35 !important; }
-
-    body { padding-top: 120px; }
-    @media (max-width: 768px) {
-      .pf-announce-bar { font-size: 11px; padding: 7px 12px; }
-      .pf-nav-list { display: none !important; }
-      .pf-burger { display: block; }
-      .pf-cart-label { display: none; }
-      body { padding-top: 105px !important; }
-    }
+    html, body { transform: none !important; filter: none !important; perspective: none !important; contain: none !important; will-change: auto !important; }
+    #shopify-section-header { transform: none !important; filter: none !important; perspective: none !important; contain: none !important; will-change: auto !important; }
+    body { padding-top: 72px !important; }
+    .site-header { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; z-index: 9999 !important; background: #fff !important; }
   </style>
 </head>
 
 <body class="{% if customer %}customer-logged-in{% endif %}">
 
-  {%- section 'header' -%}
+  {%- sections 'announcement-bar' -%}
+  {%- sections 'header' -%}
 
   <main id="MainContent" role="main" tabindex="-1">
     {{ content_for_layout }}
@@ -179,6 +45,16 @@
 
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
+  <script>
+    (function() {
+      var header = document.querySelector('.site-header');
+      if (header) {
+        document.body.appendChild(header);
+        header.style.cssText = 'position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:9999!important;background:#fff;border-bottom:1px solid #E8EDE7;box-shadow:0 2px 8px rgba(0,0,0,0.06);';
+        document.body.style.paddingTop = header.offsetHeight + 'px';
+      }
+    })();
+  </script>
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
   <script>
     function pawfieldAddToCart(btn) {
