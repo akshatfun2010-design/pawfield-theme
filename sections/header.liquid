@@ -1,51 +1,43 @@
-<header class="pf-header" id="pf-global-header">
-  <div class="pf-announce-bar">🐾 Free shipping on orders over $60 &middot; Use PAWFIELD10 for 10% off</div>
-  <div class="pf-nav-wrap">
-    <a href="{{ routes.root_url }}" class="pf-logo-link">
+<header class="site-header" style="position:fixed;top:0;left:0;right:0;width:100%;z-index:9999;background:#fff;border-bottom:1px solid #E8EDE7;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+  <div class="header__wrapper" style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;max-width:1280px;margin:0 auto;padding:0 32px;height:72px;gap:24px;">
+
+    <nav aria-label="Main navigation">
+      <ul class="header__nav">
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="/collections/all">Catalog</a></li>
+        <li><a href="/pages/about-us">About Us</a></li>
+        <li><a href="{{ routes.account_url }}">Orders</a></li>
+      </ul>
+    </nav>
+
+    <a href="{{ routes.root_url }}" class="header__logo">
       {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" height="40" loading="eager">
+        <img src="{{ section.settings.logo | image_url: width: 160 }}" alt="{{ shop.name }}" width="160" height="44">
       {%- else -%}
         🐾 {{ shop.name }}
       {%- endif -%}
     </a>
-    <nav aria-label="Main navigation">
-      <ul class="pf-nav-list">
-        <li><a href="{{ routes.root_url }}">Home</a></li>
-        <li><a href="/collections/all">Catalog</a></li>
-        <li><a href="/pages/about-us">About Us</a></li>
-        <li><a href="/pages/contact">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="pf-header-actions">
-      <a href="{{ routes.cart_url }}" class="pf-cart-btn" aria-label="Cart">
-        🛒 <span class="pf-cart-label">Cart</span>
-        <span class="pf-cart-count" id="cart-count">{{ cart.item_count }}</span>
+
+    <div class="header__icons" style="justify-self:end;">
+      <a href="{{ routes.cart_url }}" class="header__cart-btn" aria-label="Cart" id="cart-btn">
+        🛒 Cart
+        <span class="header__cart-count" id="cart-count">{{ cart.item_count }}</span>
       </a>
-      <button class="pf-burger" id="pfBurger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <button class="header__mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
     </div>
+
   </div>
-  <nav class="pf-mobile-menu" id="pfMobileMenu" aria-label="Mobile navigation">
-    <a href="{{ routes.root_url }}">Home</a>
-    <a href="/collections/all">Catalog</a>
-    <a href="/pages/about-us">About Us</a>
-    <a href="/pages/contact">Contact</a>
-    <a href="{{ routes.cart_url }}">🛒 Cart ({{ cart.item_count }})</a>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <ul>
+      <li><a href="{{ routes.root_url }}">Home</a></li>
+      <li><a href="/collections/all">Catalog</a></li>
+      <li><a href="/pages/about-us">About Us</a></li>
+      <li><a href="{{ routes.account_url }}">Orders</a></li>
+      <li><a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a></li>
+    </ul>
   </nav>
 </header>
-
-<script>
-  (function() {
-    var burger = document.getElementById('pfBurger');
-    var menu = document.getElementById('pfMobileMenu');
-    if (burger && menu) {
-      burger.addEventListener('click', function() {
-        var open = menu.classList.toggle('is-open');
-        burger.setAttribute('aria-expanded', open);
-        burger.textContent = open ? '✕' : '☰';
-      });
-    }
-  })();
-</script>
 
 {% schema %}
 {
@@ -55,6 +47,18 @@
       "type": "image_picker",
       "id": "logo",
       "label": "Logo image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency",
+      "label": "Show currency selector",
+      "default": true
     }
   ]
 }
