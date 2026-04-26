@@ -114,30 +114,8 @@
 </div>
 
 <script>
-  var cartTimers = {};
-
   function updateCartItem(key, quantity) {
     if (isNaN(quantity) || quantity < 0) return;
-
-    // Update qty display immediately
-    var qtyEl = document.getElementById('qty-' + key.replace(':', '-'));
-    if (qtyEl && quantity > 0) qtyEl.textContent = quantity;
-
-    // Debounce API call — only fires 400ms after last click
-    if (cartTimers[key]) clearTimeout(cartTimers[key]);
-
-    if (quantity === 0) {
-      // Remove instantly, no debounce needed
-      sendCartUpdate(key, 0);
-      return;
-    }
-
-    cartTimers[key] = setTimeout(function() {
-      sendCartUpdate(key, quantity);
-    }, 400);
-  }
-
-  function sendCartUpdate(key, quantity) {
     fetch('/cart/change.js', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -182,6 +160,8 @@
         var itemEl = document.getElementById('cart-item-' + key.replace(':', '-'));
         if (itemEl) itemEl.remove();
       } else {
+        var qtyEl = document.getElementById('qty-' + key.replace(':', '-'));
+        if (qtyEl) qtyEl.textContent = quantity;
         cart.items.forEach(function(item) {
           if (item.key === key) {
             var priceEl = document.getElementById('price-' + key.replace(':', '-'));
