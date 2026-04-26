@@ -468,6 +468,46 @@
   </div>
 {%- endif -%}
 
+<style>
+  .jdgm-write-rev-link,
+  .jdgm-no-rev-msg,
+  .jdgm-rev-widg__summary-no-rev { display: none !important; }
+
+  .jdgm-rev-widg__title {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 700;
+    color: #1C1C1C;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #EAF2E9;
+  }
+
+  .jdgm-write-rev {
+    background: #3A6B35 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 12px 24px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+  }
+  .jdgm-write-rev:hover { background: #2D5A28 !important; }
+
+  .jdgm-rev__author { font-weight: 600; color: #1C1C1C; }
+  .jdgm-rev__timestamp { color: #9CA3AF; font-size: 13px; }
+  .jdgm-rev__body { color: #374151; line-height: 1.6; }
+  .jdgm-star { color: #F59E0B !important; }
+
+  #judgeme_product_reviews {
+    max-width: 860px;
+    margin: 40px auto 0;
+    padding: 40px 24px;
+    border-top: 2px solid #EAF2E9;
+  }
+</style>
+
 <!-- Start of Judge.me code -->{% assign has_legacy = false %}{% if product.metafields.judgeme.widget.size > 20 %}{% assign has_legacy = true %}{% endif %}<div style='clear:both'></div><div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-product-id='{{ product.id }}' data-widget='review' data-auto-install='false' data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' data-entry-point='review_widget.js' data-entry-key='review-widget/main.js'>{% if has_legacy %}<div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>{% endif %}</div>{% if product.metafields.judgeme.review_widget_data %}<script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>{% endif %}<!-- End of Judge.me code -->
 
 <script>
