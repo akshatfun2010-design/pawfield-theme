@@ -133,7 +133,7 @@
       var subtotalEl = document.getElementById('cart-subtotal');
       var totalEl = document.getElementById('cart-total');
       var threshold = 6000;
-      var subtotalPrice = cart.total_price;
+      var subtotalPrice = parseInt(cart.total_price) || 0;
       var shippingCost = subtotalPrice >= threshold ? 0 : 600;
       var price = (subtotalPrice / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
       var totalPrice = ((subtotalPrice + shippingCost) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
@@ -144,14 +144,14 @@
       var fillEl = document.getElementById('shipping-bar-fill');
       var shippingEl = document.getElementById('cart-shipping');
       if (msgEl && fillEl) {
-        var pct = Math.min(Math.round(cart.total_price / threshold * 100), 100);
+        var pct = Math.min(Math.round(subtotalPrice / threshold * 100), 100);
         fillEl.style.width = pct + '%';
-        if (cart.total_price >= threshold) {
+        if (subtotalPrice >= threshold) {
           msgEl.className = 'shipping-bar__message unlocked';
           msgEl.innerHTML = "You've unlocked free shipping! 🎉";
           if (shippingEl) { shippingEl.textContent = 'FREE'; shippingEl.style.color = 'var(--green)'; }
         } else {
-          var remaining = ((threshold - cart.total_price) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+          var remaining = ((threshold - subtotalPrice) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
           msgEl.className = 'shipping-bar__message';
           msgEl.innerHTML = "You're <strong>" + remaining + "</strong> away from free shipping!";
           if (shippingEl) { shippingEl.textContent = '$6.00'; shippingEl.style.color = '#374151'; }
@@ -168,7 +168,7 @@
         cart.items.forEach(function(item) {
           if (item.key === key) {
             var priceEl = document.getElementById('price-' + key.replace(':', '-'));
-            if (priceEl) priceEl.textContent = (item.final_line_price / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+            if (priceEl) priceEl.textContent = ((parseInt(item.final_line_price) || 0) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
           }
         });
       }
