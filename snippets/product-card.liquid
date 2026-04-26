@@ -1,11 +1,4 @@
 {%- assign fake_compare = product.price | times: 10 | divided_by: 7 -%}
-{%- assign star_seed = product.id | modulo: 13 -%}
-{%- if star_seed < 3 -%}{%- assign fake_rating = "4.6" -%}
-{%- elsif star_seed < 7 -%}{%- assign fake_rating = "4.7" -%}
-{%- elsif star_seed < 10 -%}{%- assign fake_rating = "4.8" -%}
-{%- else -%}{%- assign fake_rating = "4.9" -%}
-{%- endif -%}
-{%- assign fake_count = product.id | modulo: 179 | plus: 150 -%}
 <div class="product-card">
   <div class="product-card__badge product-card__badge--red">30% OFF</div>
 
@@ -28,10 +21,6 @@
     <a href="{{ product.url }}">
       <div class="product-card__title">{{ product.title }}</div>
     </a>
-    <div class="product-card__stars">
-      <span class="product-card__stars-icons">★★★★★</span>
-      <span class="product-card__review-count">{{ fake_rating }} ({{ fake_count }} reviews)</span>
-    </div>
     <div class="product-card__footer">
       <div>
         <span class="product-card__original-price">{{ fake_compare | money }}</span>
