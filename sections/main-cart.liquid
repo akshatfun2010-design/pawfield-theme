@@ -77,9 +77,9 @@
               <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">{{ item.variant.title }}</div>
             {%- endunless -%}
             <div class="cart-item__qty">
-              <button class="cart-item__qty-btn" type="button" onclick="var q=parseInt(document.getElementById('qty-{{ item.key | replace: ':', '-' }}').textContent)||{{ item.quantity }};updateCartItem('{{ item.key }}',q-1)">−</button>
+              <button class="cart-item__qty-btn" type="button" onclick="changeQty('{{ item.key }}',-1)">−</button>
               <span class="cart-item__qty-num" id="qty-{{ item.key | replace: ':', '-' }}">{{ item.quantity }}</span>
-              <button class="cart-item__qty-btn" type="button" onclick="var q=parseInt(document.getElementById('qty-{{ item.key | replace: ':', '-' }}').textContent)||{{ item.quantity }};updateCartItem('{{ item.key }}',q+1)">+</button>
+              <button class="cart-item__qty-btn" type="button" onclick="changeQty('{{ item.key }}',1)">+</button>
             </div>
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
@@ -114,6 +114,18 @@
 </div>
 
 <script>
+  function fmt(cents) {
+    return (Math.max(parseInt(cents) || 0, 0) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
+  }
+
+  function changeQty(key, delta) {
+    var safeKey = key.replace(':', '-');
+    var qtyEl = document.getElementById('qty-' + safeKey);
+    var current = parseInt(qtyEl ? qtyEl.textContent : '1') || 1;
+    var next = Math.max(0, current + delta);
+    updateCartItem(key, next);
+  }
+
   function updateCartItem(key, quantity) {
     if (isNaN(quantity) || quantity < 0) return;
     fetch('/cart/change.js', {
@@ -121,53 +133,55 @@
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({id: key, quantity: quantity})
     })
-    .then(function(r){ return r.json(); })
+    .then(function(r) { return r.json(); })
     .then(function(cart) {
       var countEl = document.getElementById('cart-count');
       if (countEl) countEl.textContent = cart.item_count;
 
       if (cart.item_count === 0) { location.reload(); return; }
 
-      var subtotalEl = document.getElementById('cart-subtotal');
-      var totalEl = document.getElementById('cart-total');
-      var threshold = 6000;
-      var subtotalPrice = parseInt(cart.total_price) || 0;
-      var shippingCost = subtotalPrice >= threshold ? 0 : 600;
-      var price = (subtotalPrice / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
-      var totalPrice = ((subtotalPrice + shippingCost) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
-      if (subtotalEl) subtotalEl.textContent = price;
-      if (totalEl) totalEl.textContent = totalPrice;
-
-      var msgEl = document.getElementById('shipping-bar-msg');
-      var fillEl = document.getElementById('shipping-bar-fill');
-      var shippingEl = document.getElementById('cart-shipping');
-      if (msgEl && fillEl) {
-        var pct = Math.min(Math.round(subtotalPrice / threshold * 100), 100);
-        fillEl.style.width = pct + '%';
-        if (subtotalPrice >= threshold) {
-          msgEl.className = 'shipping-bar__message unlocked';
-          msgEl.innerHTML = "You've unlocked free shipping! 🎉";
-          if (shippingEl) { shippingEl.textContent = 'FREE'; shippingEl.style.color = 'var(--green)'; }
-        } else {
-          var remaining = ((threshold - subtotalPrice) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
-          msgEl.className = 'shipping-bar__message';
-          msgEl.innerHTML = "You're <strong>" + remaining + "</strong> away from free shipping!";
-          if (shippingEl) { shippingEl.textContent = '$6.00'; shippingEl.style.color = '#374151'; }
-        }
-      }
-
+      // Remove item from DOM if qty set to 0
       if (quantity === 0) {
         var itemEl = document.getElementById('cart-item-' + key.replace(':', '-'));
         if (itemEl) itemEl.remove();
-      } else {
-        var qtyEl = document.getElementById('qty-' + key.replace(':', '-'));
-        if (qtyEl) qtyEl.textContent = quantity;
-        cart.items.forEach(function(item) {
-          if (item.key === key) {
-            var priceEl = document.getElementById('price-' + key.replace(':', '-'));
-            if (priceEl) priceEl.textContent = ((parseInt(item.final_line_price) || 0) / 100).toLocaleString('en-US', {style:'currency', currency:'USD'});
-          }
-        });
+      }
+
+      // Update every item's qty and line price from the API response
+      cart.items.forEach(function(item) {
+        var sk = item.key.replace(':', '-');
+        var q = document.getElementById('qty-' + sk);
+        var p = document.getElementById('price-' + sk);
+        if (q) q.textContent = item.quantity;
+        if (p) p.textContent = fmt(item.final_line_price);
+      });
+
+      // Update order summary from fresh cart data
+      var subtotal = parseInt(cart.total_price) || 0;
+      var threshold = 6000;
+      var shipping = subtotal >= threshold ? 0 : 600;
+
+      var subtotalEl = document.getElementById('cart-subtotal');
+      var totalEl = document.getElementById('cart-total');
+      var shippingEl = document.getElementById('cart-shipping');
+      if (subtotalEl) subtotalEl.textContent = fmt(subtotal);
+      if (totalEl) totalEl.textContent = fmt(subtotal + shipping);
+      if (shippingEl) {
+        if (subtotal >= threshold) { shippingEl.textContent = 'FREE'; shippingEl.style.color = 'var(--green)'; }
+        else { shippingEl.textContent = '$6.00'; shippingEl.style.color = '#374151'; }
+      }
+
+      // Update shipping progress bar
+      var msgEl = document.getElementById('shipping-bar-msg');
+      var fillEl = document.getElementById('shipping-bar-fill');
+      if (msgEl && fillEl) {
+        fillEl.style.width = Math.min(Math.round(subtotal / threshold * 100), 100) + '%';
+        if (subtotal >= threshold) {
+          msgEl.className = 'shipping-bar__message unlocked';
+          msgEl.innerHTML = "You've unlocked free shipping! 🎉";
+        } else {
+          msgEl.className = 'shipping-bar__message';
+          msgEl.innerHTML = "You're <strong>" + fmt(threshold - subtotal) + "</strong> away from free shipping!";
+        }
       }
     });
   }
