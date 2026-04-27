@@ -471,7 +471,10 @@
 <style>
   .jdgm-write-rev-link,
   .jdgm-no-rev-msg,
-  .jdgm-rev-widg__summary-no-rev { display: none !important; }
+  .jdgm-rev-widg__summary-no-rev,
+  .jdgm-rev-widg__no-rev-msg,
+  [class*="no-rev"],
+  [class*="no_rev"] { display: none !important; }
 
   .jdgm-rev-widg__title {
     font-family: var(--font-heading);
@@ -507,6 +510,25 @@
     border-top: 2px solid #EAF2E9;
   }
 </style>
+
+<script>
+  function hideJudgemeEmpty() {
+    document.querySelectorAll('#judgeme_product_reviews *').forEach(function(el) {
+      var t = el.textContent.trim();
+      if (t === 'Be the first to write a review' || t === 'No items found') {
+        el.style.display = 'none';
+      }
+    });
+  }
+  setTimeout(hideJudgemeEmpty, 800);
+  setTimeout(hideJudgemeEmpty, 2000);
+  if (window.MutationObserver) {
+    var jdgmTarget = document.getElementById('judgeme_product_reviews');
+    if (jdgmTarget) {
+      new MutationObserver(hideJudgemeEmpty).observe(jdgmTarget, {childList: true, subtree: true});
+    }
+  }
+</script>
 
 <!-- Start of Judge.me code -->{% assign has_legacy = false %}{% if product.metafields.judgeme.widget.size > 20 %}{% assign has_legacy = true %}{% endif %}<div style='clear:both'></div><div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-product-id='{{ product.id }}' data-widget='review' data-auto-install='false' data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' data-entry-point='review_widget.js' data-entry-key='review-widget/main.js'>{% if has_legacy %}<div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>{% endif %}</div>{% if product.metafields.judgeme.review_widget_data %}<script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>{% endif %}<!-- End of Judge.me code -->
 
