@@ -77,18 +77,6 @@
         "show_filters": false
       }
     },
-    "newsletter_HqBGy6": {
-      "type": "newsletter",
-      "disabled": true,
-      "name": "Newsletter",
-      "settings": {
-        "icon": "🐾",
-        "title": "Join the Pawfield Family",
-        "text": "Would you like to receive news and exclusive offers?",
-        "placeholder": "Enter your email address",
-        "button": "Subscribe →"
-      }
-    },
     "rich_text_Drji7U": {
       "type": "rich-text",
       "name": "Rich Text",
@@ -106,7 +94,6 @@
     "pf-header",
     "main",
     "related",
-    "newsletter_HqBGy6",
     "rich_text_Drji7U"
   ]
 }
