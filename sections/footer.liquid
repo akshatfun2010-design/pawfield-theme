@@ -1,118 +1,151 @@
-{%- if section.settings.rt_heading != blank or section.settings.rt_text != blank -%}
-<div class="footer-richtext" style="background:{{ section.settings.rt_bg }};padding:60px 24px;text-align:{{ section.settings.rt_align }};">
-  <div style="max-width:720px;margin:0 auto;">
-    {%- if section.settings.rt_heading != blank -%}
-      <h2 style="font-family:var(--font-heading,'Playfair Display',serif);font-size:32px;font-weight:700;color:{{ section.settings.rt_text_color }};margin:0 0 16px;">{{ section.settings.rt_heading | escape }}</h2>
-    {%- endif -%}
-    {%- if section.settings.rt_text != blank -%}
-      <div style="font-size:16px;line-height:1.75;color:{{ section.settings.rt_text_color }};opacity:0.85;margin:0 0 28px;">{{ section.settings.rt_text }}</div>
-    {%- endif -%}
-    {%- if section.settings.rt_btn_label != blank and section.settings.rt_btn_url != blank -%}
-      <a href="{{ section.settings.rt_btn_url }}" style="display:inline-block;padding:13px 28px;background:{{ section.settings.rt_btn_bg }};color:{{ section.settings.rt_btn_text }};border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">{{ section.settings.rt_btn_label | escape }}</a>
-    {%- endif -%}
-  </div>
-</div>
-{%- endif -%}
+<style>
+  .site-footer {
+    background: #fff;
+    border-top: 1px solid #e8ede7;
+    padding: 60px 24px 32px;
+  }
+  .site-footer__grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  .site-footer__heading {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1c1c1c;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .site-footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .site-footer__links li { margin-bottom: 10px; }
+  .site-footer__links a {
+    font-size: 14px;
+    color: #6B7280;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .site-footer__links a:hover { color: #3A6B35; }
+  .site-footer__service-text {
+    font-size: 14px;
+    color: #374151;
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .site-footer__email {
+    display: block;
+    font-size: 14px;
+    color: #3A6B35;
+    text-align: center;
+    text-decoration: none;
+  }
+  .site-footer__newsletter-text {
+    font-size: 14px;
+    color: #374151;
+    text-align: center;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .site-footer__form { display: flex; flex-direction: column; gap: 8px; }
+  .site-footer__input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #374151;
+    box-sizing: border-box;
+    outline: none;
+  }
+  .site-footer__input:focus { border-color: #3A6B35; }
+  .site-footer__subscribe {
+    width: 100%;
+    padding: 11px;
+    background: #3A6B35;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .site-footer__subscribe:hover { opacity: 0.88; }
+  .site-footer__bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid #e8ede7;
+    text-align: center;
+    font-size: 13px;
+    color: #9CA3AF;
+  }
+  @media (max-width: 768px) {
+    .site-footer__grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .site-footer { padding: 40px 16px 24px; }
+  }
+  @media (max-width: 480px) {
+    .site-footer__grid { grid-template-columns: 1fr; }
+  }
+</style>
 
 <footer class="site-footer">
-  <div class="footer__inner">
-    <div class="footer__grid">
-      <div>
-        <div class="footer__logo">
-          {%- if section.settings.logo != blank -%}
-            <img src="{{ section.settings.logo | image_url: width: 140 }}" alt="{{ shop.name }}">
-          {%- else -%}
-            🐾 {{ shop.name }}
-          {%- endif -%}
-        </div>
-        <p class="footer__desc">{{ section.settings.description }}</p>
-        <div class="footer__socials">
-          {%- if section.settings.instagram != blank -%}
-            <a href="{{ section.settings.instagram }}" class="footer__social" aria-label="Instagram">📸</a>
-          {%- endif -%}
-          {%- if section.settings.facebook != blank -%}
-            <a href="{{ section.settings.facebook }}" class="footer__social" aria-label="Facebook">📘</a>
-          {%- endif -%}
-          {%- if section.settings.tiktok != blank -%}
-            <a href="{{ section.settings.tiktok }}" class="footer__social" aria-label="TikTok">🎵</a>
-          {%- endif -%}
-          {%- if section.settings.youtube != blank -%}
-            <a href="{{ section.settings.youtube }}" class="footer__social" aria-label="YouTube">▶️</a>
-          {%- endif -%}
-        </div>
-      </div>
+  <div class="site-footer__grid">
 
-      <div>
-        <div class="footer__heading">Quick Links</div>
-        <ul class="footer__links">
-          <li><a href="{{ routes.root_url }}">Home</a></li>
-          <li><a href="/collections/all">Catalog</a></li>
-          <li><a href="/pages/about-us">About Us</a></li>
-          <li><a href="/pages/faq">FAQ</a></li>
-          <li><a href="/pages/contact">Contact</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer__heading">Our Policies</div>
-        <ul class="footer__links">
-          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
-          <li><a href="/policies/refund-policy">Refund Policy</a></li>
-          <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
-          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer__heading">Customer Service</div>
-        <ul class="footer__links">
-          <li><a href="/pages/contact">Contact Us</a></li>
-          <li><a href="mailto:support@pawfield.co">support@pawfield.co</a></li>
-          <li><span style="color:var(--muted);font-size:13px;">Mon–Fri, 9am–6pm EST</span></li>
-        </ul>
-      </div>
+    <div>
+      <div class="site-footer__heading">About PawField</div>
+      <ul class="site-footer__links">
+        <li><a href="/pages/about-us">About Us</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+        <li><a href="/pages/faq">FAQ</a></li>
+      </ul>
     </div>
 
-    <div class="footer__bottom">
-      <div>© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved. Made with ♥ for pets.</div>
-      <div class="footer__payments">
-        <span class="footer__payment">VISA</span>
-        <span class="footer__payment">Mastercard</span>
-        <span class="footer__payment">PayPal</span>
-        <span class="footer__payment">Apple Pay</span>
-        <span class="footer__payment">Shop Pay</span>
-      </div>
+    <div>
+      <div class="site-footer__heading">Our Policies</div>
+      <ul class="site-footer__links">
+        <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/policies/refund-policy">Refund Policy</a></li>
+        <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+        <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+      </ul>
     </div>
+
+    <div>
+      <div class="site-footer__heading">Customer Service Hours</div>
+      <p class="site-footer__service-text">Our customer service team is available 24/7</p>
+      <a href="mailto:support@pawfield.co" class="site-footer__email">support@pawfield.co</a>
+    </div>
+
+    <div>
+      <div class="site-footer__heading">Newsletter</div>
+      <p class="site-footer__newsletter-text">Would you like to receive news and exclusive offers?</p>
+      <form class="site-footer__form" action="/contact#contact_form" method="post" accept-charset="UTF-8">
+        <input type="hidden" name="form_type" value="customer">
+        <input type="hidden" name="utf8" value="✓">
+        <input class="site-footer__input" type="email" name="contact[email]" placeholder="Enter your email" required>
+        <button type="submit" class="site-footer__subscribe">Subscribe</button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="site-footer__bottom">
+    © {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
   </div>
 </footer>
 
 {% schema %}
 {
   "name": "Footer",
-  "settings": [
-    { "type": "header", "content": "Rich Text Banner" },
-    { "type": "text", "id": "rt_heading", "label": "Heading", "default": "Our Mission" },
-    { "type": "richtext", "id": "rt_text", "label": "Body text", "default": "<p>To make premium pet care accessible to every pet parent — because your furry family members deserve nothing less than the best.</p>" },
-    { "type": "text", "id": "rt_btn_label", "label": "Button label", "default": "Shop Our Collection →" },
-    { "type": "url", "id": "rt_btn_url", "label": "Button URL" },
-    { "type": "color", "id": "rt_bg", "label": "Background color", "default": "#3A6B35" },
-    { "type": "color", "id": "rt_text_color", "label": "Text color", "default": "#ffffff" },
-    { "type": "color", "id": "rt_btn_bg", "label": "Button background", "default": "#ffffff" },
-    { "type": "color", "id": "rt_btn_text", "label": "Button text color", "default": "#3A6B35" },
-    { "type": "select", "id": "rt_align", "label": "Text alignment", "options": [{"value":"left","label":"Left"},{"value":"center","label":"Center"},{"value":"right","label":"Right"}], "default": "center" },
-    { "type": "header", "content": "Footer" },
-    { "type": "image_picker", "id": "logo", "label": "Logo" },
-    { "type": "textarea", "id": "description", "label": "Store description", "default": "Premium pet essentials for dogs and cats. We believe every pet deserves the best — and every owner deserves products that actually work." },
-    { "type": "url", "id": "instagram", "label": "Instagram URL" },
-    { "type": "url", "id": "facebook", "label": "Facebook URL" },
-    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
-    { "type": "url", "id": "youtube", "label": "YouTube URL" },
-    { "type": "text", "id": "heading_1", "label": "Column 1 heading", "default": "Shop" },
-    { "type": "link_list", "id": "menu_1", "label": "Column 1 menu" },
-    { "type": "text", "id": "heading_2", "label": "Column 2 heading", "default": "Support" },
-    { "type": "link_list", "id": "menu_2", "label": "Column 2 menu" },
-    { "type": "text", "id": "heading_3", "label": "Column 3 heading", "default": "Company" },
-    { "type": "link_list", "id": "menu_3", "label": "Column 3 menu" }
-  ]
+  "settings": []
 }
 {% endschema %}
