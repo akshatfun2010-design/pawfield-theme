@@ -45,6 +45,21 @@
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
   <script>
+    if (window.location.pathname.startsWith('/policies/')) {
+      document.addEventListener('DOMContentLoaded', function() {
+        var link = document.createElement('a');
+        link.href = document.referrer && document.referrer !== window.location.href ? document.referrer : '/';
+        link.textContent = '← Back';
+        link.style.cssText = 'display:inline-flex;align-items:center;color:#3A6B35;font-size:14px;font-weight:500;text-decoration:none;margin:24px 0 0 24px;opacity:0.85;';
+        link.onmouseover = function(){ this.style.opacity='1'; };
+        link.onmouseout = function(){ this.style.opacity='0.85'; };
+        var main = document.getElementById('MainContent');
+        if (main) main.insertBefore(link, main.firstChild);
+      });
+    }
+  </script>
+
+  <script>
     (function() {
       var header = document.querySelector('.site-header');
       if (header) {
