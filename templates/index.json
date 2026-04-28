@@ -184,7 +184,7 @@
     },
     "rich_text_QF8gqM": {
       "type": "rich-text",
-      "name": "Rich Text",
+      "name": "FOOTER",
       "settings": {
         "tag": "",
         "title": "",
@@ -193,33 +193,6 @@
         "button_url": "",
         "background": "white"
       }
-    },
-    "177700724204904761": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_cdedbbb_H8AMBF": {
-          "type": "ai_gen_block_cdedbbb",
-          "settings": {
-            "button_size": 60,
-            "border_radius": 30,
-            "button_color": "#3a6b35",
-            "button_hover_color": "#2d5429",
-            "icon_color": "#ffffff",
-            "badge_size": 22,
-            "badge_color": "#d4882a",
-            "badge_text_color": "#ffffff",
-            "bottom_position": 30,
-            "right_position": 30,
-            "mobile_bottom_position": 20,
-            "mobile_right_position": 20
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_cdedbbb_H8AMBF"
-      ],
-      "settings": {}
     }
   },
   "order": [
@@ -232,7 +205,6 @@
     "testimonials",
     "all-products",
     "rich-text",
-    "rich_text_QF8gqM",
-    "177700724204904761"
+    "rich_text_QF8gqM"
   ]
 }
