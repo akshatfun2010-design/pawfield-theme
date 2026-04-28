@@ -44,9 +44,12 @@
 </style>
 
 <div class="policy-page">
-  <a href="javascript:history.back()" class="policy-back">
-    ← Back
-  </a>
+  <a href="/" class="policy-back" id="policy-back-btn">← Back</a>
+  <script>
+    if (document.referrer && document.referrer !== window.location.href) {
+      document.getElementById('policy-back-btn').href = document.referrer;
+    }
+  </script>
   <h1>{{ policy.title }}</h1>
   <div class="policy-body">{{ policy.body }}</div>
 </div>
