@@ -188,7 +188,7 @@
       "settings": {
         "tag": "",
         "title": "",
-        "text": "<div style=\"display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding: 60px 0;\">\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">About PawField</h3>\n    <ul style=\"list-style: none; padding: 0; margin: 0;\">\n      <li style=\"margin-bottom: 12px;\"><a href=\"/pages/about-us\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">About Us</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/pages/contact\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Contact</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/pages/faq\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">FAQ</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/pages/charity\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Charity</a></li>\n    </ul>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Our Policies</h3>\n    <ul style=\"list-style: none; padding: 0; margin: 0;\">\n      <li style=\"margin-bottom: 12px;\"><a href=\"/policies/privacy-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Privacy Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/policies/refund-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Refund Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/policies/shipping-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Shipping Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/policies/terms-of-service\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Terms of Service</a></li>\n    </ul>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Customer Service Hours</h3>\n    <p style=\"font-size: 14px; line-height: 1.6; color: #1c1c1c; margin: 0 0 12px 0;\">Our customer service team is available 24/7</p>\n    <p style=\"font-size: 14px; color: #1c1c1c; margin: 0;\"><a href=\"mailto:support@pawfield.co\" style=\"color: #3a6b35; text-decoration: none; cursor: pointer;\">support@pawfield.co</a></p>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Newsletter</h3>\n    <p style=\"font-size: 14px; line-height: 1.6; color: #1c1c1c; margin: 0 0 16px 0;\">Would you like to receive news and exclusive offers?</p>\n    <form style=\"display: flex; flex-direction: column; gap: 8px;\">\n      <input type=\"email\" placeholder=\"Enter your email\" style=\"padding: 10px 12px; border: 1px solid #e5e5e0; border-radius: 4px; font-size: 14px; font-family: inherit;\" required>\n      <button type=\"submit\" style=\"padding: 10px 12px; background-color: #3a6b35; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer;\">Subscribe</button>\n    </form>\n  </div>\n</div>",
+        "text": "<div style=\"display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding: 60px 0;\">\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">About PawField</h3>\n    <ul style=\"list-style: none; padding: 0; margin: 0;\">\n      <li style=\"margin-bottom: 12px;\"><a href=\"/pages/about-us\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">About Us</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/pages/contact\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Contact</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/pages/faq\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">FAQ</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/pages/charity\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Charity</a></li>\n    </ul>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Our Policies</h3>\n    <ul style=\"list-style: none; padding: 0; margin: 0;\">\n      <li style=\"margin-bottom: 12px;\"><a href=\"/policies/privacy-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Privacy Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/policies/refund-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Refund Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/policies/shipping-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Shipping Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"/policies/terms-of-service\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px; cursor: pointer;\">Terms of Service</a></li>\n    </ul>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Customer Service Hours</h3>\n    <p style=\"font-size: 14px; line-height: 1.6; color: #1c1c1c; margin: 0 0 12px 0;\">Our customer service team is available 24/7</p>\n    <p style=\"font-size: 14px; color: #1c1c1c; margin: 0;\"><a href=\"mailto:support@pawfield.co\" style=\"color: #3a6b35; text-decoration: none; cursor: pointer;\">support@pawfield.co</a></p>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Newsletter</h3>\n    <p style=\"font-size: 14px; line-height: 1.6; color: #1c1c1c; margin: 0 0 16px 0;\">Would you like to receive news and exclusive offers?</p>\n    <form style=\"display: flex; flex-direction: column; gap: 8px;\">\n      <input type=\"email\" placeholder=\"Enter your email\" style=\"padding: 10px 12px; border: 1px solid #e5e5e0; border-radius: 4px; font-size: 14px; font-family: inherit;\" required>\n      <button type=\"submit\" style=\"padding: 10px 12px; background-color: #3a6b35; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer;\">Subscribe</button>\n    </form>\n  </div>\n</div>\n<style>\n  @media (max-width: 768px) {\n    div[style*=\"grid-template-columns: repeat(4, 1fr)\"] {\n      grid-template-columns: 1fr !important;\n      gap: 32px !important;\n      padding: 40px 0 !important;\n    }\n  }\n  @media (max-width: 480px) {\n    div[style*=\"grid-template-columns: repeat(4, 1fr)\"] {\n      gap: 24px !important;\n      padding: 30px 0 !important;\n    }\n    div[style*=\"grid-template-columns: repeat(4, 1fr)\"] h3 {\n      font-size: 14px !important;\n      margin-bottom: 16px !important;\n    }\n    div[style*=\"grid-template-columns: repeat(4, 1fr)\"] p {\n      font-size: 13px !important;\n    }\n    div[style*=\"grid-template-columns: repeat(4, 1fr)\"] a {\n      font-size: 13px !important;\n    }\n  }\n</style>",
         "button_label": "",
         "button_url": "",
         "background": "white"
@@ -235,32 +235,6 @@
     },
     "1777338633823be43e": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_77cec4c_EgPjmh": {
-          "type": "ai_gen_block_77cec4c",
-          "settings": {
-            "show_text": true,
-            "button_text": "Back",
-            "desktop_width_percent": 100,
-            "bottom_spacing": 20,
-            "button_background": "rgba(0,0,0,0)",
-            "button_hover_background": "#FAFAF6",
-            "button_text_color": "#1C1C1C",
-            "button_hover_text_color": "#3A6B35",
-            "border_color": "rgba(0,0,0,0)",
-            "border_hover_color": "#3A6B35",
-            "border_width": 1,
-            "border_radius": 4,
-            "button_padding": 8,
-            "font_size": 14,
-            "arrow_size": 18
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_77cec4c_EgPjmh"
-      ],
       "settings": {}
     }
   },
