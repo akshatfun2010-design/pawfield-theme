@@ -1,6 +1,232 @@
+{% doc %}
+  @prompt
+    Add a back navigation arrow button at the top of all policy pages (privacy policy, refund policy, shipping policy, terms of service) that takes customers back to the previous page. It should be subtle and clean, matching the store's style.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-policy-back-nav-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto {{ block.settings.bottom_spacing }}px;
+  }
+
+  .ai-policy-back-nav__button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: {{ block.settings.button_padding }}px {{ block.settings.button_padding | times: 1.5 }}px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    font-size: {{ block.settings.font_size }}px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .ai-policy-back-nav__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+    border-color: {{ block.settings.border_hover_color }};
+  }
+
+  .ai-policy-back-nav__arrow-{{ ai_gen_id }} {
+    width: {{ block.settings.arrow_size }}px;
+    height: {{ block.settings.arrow_size }}px;
+    flex-shrink: 0;
+  }
+
+  .ai-policy-back-nav__text-{{ ai_gen_id }} {
+    line-height: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-policy-back-nav-{{ ai_gen_id }} {
+      margin-bottom: {{ block.settings.bottom_spacing | times: 0.7 }}px;
+    }
+  }
+{% endstyle %}
+
+<policy-back-nav-{{ ai_gen_id }} class="ai-policy-back-nav-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <button class="ai-policy-back-nav__button-{{ ai_gen_id }}" aria-label="Go back to previous page">
+    <svg class="ai-policy-back-nav__arrow-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    {% if block.settings.show_text %}
+      <span class="ai-policy-back-nav__text-{{ ai_gen_id }}">{{ block.settings.button_text }}</span>
+    {% endif %}
+  </button>
+</policy-back-nav-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PolicyBackNav{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.button = this.querySelector('.ai-policy-back-nav__button-{{ ai_gen_id }}');
+        this.setupEventListener();
+      }
+
+      setupEventListener() {
+        if (this.button) {
+          this.button.addEventListener('click', function() {
+            if (window.history.length > 1) {
+              window.history.back();
+            } else {
+              window.location.href = '/';
+            }
+          });
+        }
+      }
+    }
+
+    customElements.define('policy-back-nav-{{ ai_gen_id }}', PolicyBackNav{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Policy back button",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text",
+      "label": "Show text label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Back"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "bottom_spacing",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#FAFAF6"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#1C1C1C"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#3A6B35"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "border_hover_color",
+      "label": "Hover border color",
+      "default": "#3A6B35"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "button_padding",
+      "label": "Button padding",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "label": "Arrow size",
+      "min": 12,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    }
+  ],
+  "presets": [
+    {
+      "name": "Policy back button"
+    }
+  ]
+}
 {% endschema %}
