@@ -72,7 +72,12 @@
 </style>
 
 <div class="faq-page">
-  <a href="javascript:history.back()" class="faq-back">← Back</a>
+  <a href="/" class="faq-back" id="faq-back-btn">← Back</a>
+  <script>
+    if (document.referrer && document.referrer !== window.location.href) {
+      document.getElementById('faq-back-btn').href = document.referrer;
+    }
+  </script>
   <h1>Frequently Asked Questions</h1>
   <p class="faq-subtitle">Everything you need to know about PawField. Can't find an answer? <a href="/pages/contact" style="color:var(--green,#3A6B35);">Contact us</a>.</p>
 
