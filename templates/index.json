@@ -182,14 +182,16 @@
         "background": "white"
       }
     },
-    "newsletter": {
-      "type": "newsletter",
+    "rich_text_QF8gqM": {
+      "type": "rich-text",
+      "name": "Rich Text",
       "settings": {
-        "icon": "🐾",
-        "title": "Join the Pawfield Family",
-        "text": "Get exclusive deals, new product alerts, and pet care tips delivered to your inbox. No spam — ever.",
-        "placeholder": "Enter your email address",
-        "button": "Subscribe →"
+        "tag": "",
+        "title": "",
+        "text": "<div style=\"display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding: 60px 0;\">\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">About PawField</h3>\n    <ul style=\"list-style: none; padding: 0; margin: 0;\">\n      <li style=\"margin-bottom: 12px;\"><a href=\"shopify://pages/about-us\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px;\">About Us</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"shopify://pages/contact\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px;\">Contact</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"shopify://pages/faq\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px;\">FAQ</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"shopify://pages/charity\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px;\">Charity</a></li>\n    </ul>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Our Policies</h3>\n    <ul style=\"list-style: none; padding: 0; margin: 0;\">\n      <li style=\"margin-bottom: 12px;\"><a href=\"shopify://policies/privacy-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px;\">Privacy Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"shopify://policies/refund-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px;\">Refund Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"shopify://policies/shipping-policy\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px;\">Shipping Policy</a></li>\n      <li style=\"margin-bottom: 12px;\"><a href=\"shopify://policies/terms-of-service\" style=\"color: #1c1c1c; text-decoration: none; font-size: 14px;\">Terms of Service</a></li>\n    </ul>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Customer Service Hours</h3>\n    <p style=\"font-size: 14px; line-height: 1.6; color: #1c1c1c; margin: 0 0 12px 0;\">Our customer service team is available 24/7</p>\n    <p style=\"font-size: 14px; color: #1c1c1c; margin: 0;\"><a href=\"mailto:support@pawfield.co\" style=\"color: #3a6b35; text-decoration: none;\">support@pawfield.co</a></p>\n  </div>\n  <div>\n    <h3 style=\"font-weight: 600; margin-bottom: 20px; font-size: 16px;\">Newsletter</h3>\n    <p style=\"font-size: 14px; line-height: 1.6; color: #1c1c1c; margin: 0 0 16px 0;\">Would you like to receive news and exclusive offers?</p>\n    <form style=\"display: flex; flex-direction: column; gap: 8px;\">\n      <input type=\"email\" placeholder=\"Enter your email\" style=\"padding: 10px 12px; border: 1px solid #e5e5e0; border-radius: 4px; font-size: 14px; font-family: inherit;\" required>\n      <button type=\"submit\" style=\"padding: 10px 12px; background-color: #3a6b35; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer;\">Subscribe</button>\n    </form>\n  </div>\n</div>",
+        "button_label": "",
+        "button_url": "",
+        "background": "white"
       }
     },
     "177700724204904761": {
@@ -242,7 +244,7 @@
     "testimonials",
     "all-products",
     "rich-text",
-    "newsletter",
+    "rich_text_QF8gqM",
     "177700724204904761",
     "1777013987c72db585",
     "177707213818ad64f4",
