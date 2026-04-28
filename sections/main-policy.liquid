@@ -1,0 +1,59 @@
+<style>
+  .policy-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  .policy-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--green, #3A6B35);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 32px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .policy-back:hover { opacity: 1; }
+  .policy-page h1 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: #1c1c1c;
+    margin-bottom: 32px;
+  }
+  .policy-body h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c1c1c;
+    margin: 32px 0 10px;
+  }
+  .policy-body p, .policy-body li {
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.75;
+  }
+  .policy-body ul { padding-left: 20px; margin-bottom: 16px; }
+  .policy-body a { color: var(--green, #3A6B35); }
+  @media (max-width: 768px) {
+    .policy-page { padding: 32px 16px 60px; }
+    .policy-page h1 { font-size: 26px; }
+  }
+</style>
+
+<div class="policy-page">
+  <a href="javascript:history.back()" class="policy-back">
+    ← Back
+  </a>
+  <h1>{{ policy.title }}</h1>
+  <div class="policy-body">{{ policy.body }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "Policy",
+  "settings": []
+}
+{% endschema %}
