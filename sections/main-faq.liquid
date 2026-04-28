@@ -1,0 +1,198 @@
+<style>
+  .faq-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  .faq-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--green, #3A6B35);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 32px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .faq-back:hover { opacity: 1; }
+  .faq-page h1 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: #1c1c1c;
+    margin-bottom: 8px;
+  }
+  .faq-subtitle {
+    color: #6B7280;
+    font-size: 16px;
+    margin-bottom: 48px;
+  }
+  .faq-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 20px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1c1c1c;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .faq-question:hover { color: var(--green, #3A6B35); }
+  .faq-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+    color: var(--green, #3A6B35);
+    transition: transform 0.25s ease;
+    line-height: 1;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer {
+    display: none;
+    padding: 0 0 20px;
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.75;
+  }
+  .faq-item.open .faq-answer { display: block; }
+  .faq-answer a { color: var(--green, #3A6B35); }
+  @media (max-width: 768px) {
+    .faq-page { padding: 32px 16px 60px; }
+    .faq-page h1 { font-size: 26px; }
+  }
+</style>
+
+<div class="faq-page">
+  <a href="javascript:history.back()" class="faq-back">← Back</a>
+  <h1>Frequently Asked Questions</h1>
+  <p class="faq-subtitle">Everything you need to know about PawField. Can't find an answer? <a href="/pages/contact" style="color:var(--green,#3A6B35);">Contact us</a>.</p>
+
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How long does shipping take?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        US orders typically arrive within 7–15 business days. International orders may take 10–25 business days depending on your location. You'll receive a tracking number by email once your order ships.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do you offer free shipping?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Yes! All US orders over $60 qualify for free shipping. Orders under $60 have a flat $6.00 shipping fee.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I track my order?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Once your order ships, you'll receive a confirmation email with your tracking number. Please allow 3–5 business days for the tracking information to update after receiving the email.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What is your return policy?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        We offer a 30-day return policy. If you're not satisfied with your purchase, contact us at <a href="mailto:support@pawfield.co">support@pawfield.co</a> within 30 days of receiving your order and we'll make it right. See our full <a href="/policies/refund-policy">Refund Policy</a> for details.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Can I cancel or change my order?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Orders can be cancelled or modified within 12 hours of being placed. After that, the order may already be in processing. Please email <a href="mailto:support@pawfield.co">support@pawfield.co</a> as soon as possible and we'll do our best to help.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Are your products safe for pets?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Absolutely. All PawField products are carefully selected with pet safety in mind. Our products are made from non-toxic, pet-safe materials and are designed to meet the needs of dogs and cats of all sizes.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What payment methods do you accept?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        We accept all major credit and debit cards (Visa, Mastercard), PayPal, Apple Pay, and Shop Pay for a fast, secure checkout experience.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do you ship internationally?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Yes, we ship to select international destinations including Canada and the UK. International shipping rates are calculated at checkout. Please note that customs fees or import duties may apply and are the responsibility of the customer.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        My item arrived damaged. What do I do?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        We're sorry to hear that! Please email <a href="mailto:support@pawfield.co">support@pawfield.co</a> with your order number and a photo of the damaged item within 7 days of delivery. We'll send a replacement or issue a full refund right away.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I contact customer support?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        You can reach us at <a href="mailto:support@pawfield.co">support@pawfield.co</a> or through our <a href="/pages/contact">Contact page</a>. We're available Mon–Fri, 9am–6pm PST and aim to respond within 24 hours.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": []
+}
+{% endschema %}
