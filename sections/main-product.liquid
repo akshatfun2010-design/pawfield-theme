@@ -108,7 +108,8 @@
     margin-bottom: 20px;
   }
   .pdp-info__stars-icons { color: #F59E0B; font-size: 15px; letter-spacing: 1px; }
-  .pdp-info__stars-label { font-size: 13px; color: var(--muted); }
+  .pdp-info__stars-label { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .pdp-info__stars-label:hover { color: var(--green); text-decoration: underline; }
 
   .pdp-info__price-row {
     display: flex;
@@ -366,6 +367,18 @@
       <div class="pdp-info__savings" id="savings-display">🎉 You save {{ savings | money }}!</div>
     {%- else -%}
       <div class="pdp-info__savings" id="savings-display" style="display:none;"></div>
+    {%- endif -%}
+
+    {%- assign jdgm_avg = product.metafields.judgeme.avg_rating | plus: 0 -%}
+    {%- assign jdgm_count = product.metafields.judgeme.reviews_count | plus: 0 -%}
+    {%- if jdgm_count > 0 -%}
+      <div class="pdp-info__stars">
+        <div class="pdp-info__stars-icons">
+          {%- assign full_stars = jdgm_avg | round -%}
+          {%- for i in (1..5) -%}{%- if i <= full_stars -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+        </div>
+        <a href="#judgeme_product_reviews" class="pdp-info__stars-label">{{ jdgm_avg | round: 1 }} · {{ jdgm_count }} review{% if jdgm_count != 1 %}s{% endif %}</a>
+      </div>
     {%- endif -%}
 
     {%- unless product.has_only_default_variant -%}
