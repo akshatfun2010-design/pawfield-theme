@@ -72,7 +72,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "badge": "Trusted by 12,000+ Pet Owners",
+        "badge": "Trusted by Real Pet Owners",
         "heading": "Spoil them. They're worth it.",
         "accent_word": "Very Best.",
         "subheading": "Hand-picked premium essentials for dogs and cats — tested, curated, and delivered straight to your door.",
@@ -81,10 +81,10 @@
         "button_2_label": "🤖 View Smart Tech",
         "button_2_url": "",
         "show_stats": true,
-        "stat_1_num": "12K+",
-        "stat_1_label": "Happy Customers",
-        "stat_2_num": "4.9★",
-        "stat_2_label": "Average Rating",
+        "stat_1_num": "100%",
+        "stat_1_label": "Secure Checkouts",
+        "stat_2_num": "24hr",
+        "stat_2_label": "Customer Service",
         "stat_3_num": "30-Day",
         "stat_3_label": "Money-Back Guarantee"
       }
@@ -156,7 +156,7 @@
       ],
       "settings": {
         "title": "What Pet Parents Are Saying",
-        "subtitle": "Over 12,000 happy pet parents and counting."
+        "subtitle": "Real Reviews from Real Pet Parents"
       }
     },
     "all-products": {
