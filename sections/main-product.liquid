@@ -335,16 +335,16 @@
       {%- else -%}
         <div class="pdp-gallery__placeholder">🐾</div>
       {%- endif -%}
+      {%- if product.images.size > 1 -%}
+        <div class="pdp-gallery__thumbs">
+          {%- for image in product.images limit: 6 -%}
+            <div class="pdp-gallery__thumb {% if forloop.first %}is-active{% endif %}" data-image-url="{{ image | image_url: width: 1600 }}" data-image-id="{{ image.id }}">
+              <img src="{{ image | image_url: width: 160 }}" alt="{{ product.title }}" loading="lazy">
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
-    {%- if product.images.size > 1 -%}
-      <div class="pdp-gallery__thumbs">
-        {%- for image in product.images limit: 6 -%}
-          <div class="pdp-gallery__thumb {% if forloop.first %}is-active{% endif %}" data-image-url="{{ image | image_url: width: 1600 }}" data-image-id="{{ image.id }}">
-            <img src="{{ image | image_url: width: 160 }}" alt="{{ product.title }}" loading="lazy">
-          </div>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
   </div>
 
   <div class="pdp-info">
